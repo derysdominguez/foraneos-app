@@ -1,6 +1,8 @@
 const sequelize = require('../database/database')
 const { DataTypes } = require('sequelize')
 
+const bcrypt = require('bcrypt')
+
 const User = sequelize.define(
   'user',
   {
@@ -35,5 +37,18 @@ const User = sequelize.define(
     timestamps: false
   }
 )
+
+User.beforeCreate((user, options) => {
+  user.password = bcrypt.hashSync(user.password, 10)
+})
+User.create({
+  username: 'admin',
+  email: 'admin@admin.com',
+  password: 'admin',
+  role: 'admin',
+  createdAt: new Date()
+}).then((user) => {
+  console.log(user)
+})
 
 module.exports = User
