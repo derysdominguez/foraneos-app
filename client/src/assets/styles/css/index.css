@@ -1,5 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@600;700&display=swap");
+* {
+  font-family: "Quicksand", sans-serif;
+}
+
 body {
-  color: red;
+  background-color: #fa9124 !important;
 }
 
 /*# sourceMappingURL=index.css.map */

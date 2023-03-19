@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './assets/styles/css/index.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Login from './views/login';
+import Login from './views/Login';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -9,7 +9,6 @@ function App() {
   return (
     <>
     <Login />
-    <h1>fsds</h1>
     </>
   )
 }
