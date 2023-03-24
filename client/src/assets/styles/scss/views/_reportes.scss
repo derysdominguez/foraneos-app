@@ -1,0 +1,38 @@
+.bg-control{
+    background-color: $tertiary-color!important;
+}
+
+.min-vh{
+    min-height: 100vh;
+}
+
+.rounded-end-nav{
+    border-radius: 0px 1.5rem 0px 0px;
+    box-sizing: border-box;
+}
+
+.b-sizing{
+    box-sizing: border-box;
+    max-height: 40px;
+}
+
+img {
+    max-width: 10rem;
+    max-height: 8rem;
+}
+
+.bg-color-brand{
+    background-color: $primary-color;
+}
+
+.overflow-y-content{
+    overflow-y: scroll;
+}
+
+.h-control{
+    height: 75vh;
+}
+
+.h-control-divTables{
+    height: 18.5rem;
+}

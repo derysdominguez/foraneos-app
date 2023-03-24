@@ -1,0 +1,57 @@
+import React from "react";
+import {Nav} from "react-bootstrap";
+/* import { Link } from "react-router-dom"; */
+import {BsFolderFill, BsHouseDoorFill, BsClipboardDataFill, BsFillPeopleFill, BsFillCalendarCheckFill, BsLayersFill} from 'react-icons/bs'
+import Logo from "../assets/styles/img/logo.png"
+
+function BarraLateral() {
+    
+
+    return (
+        <Nav style={{width: '100%'}} defaultActiveKey="/" as="ul" className="d-flex flex-column">
+            <Nav.Item as="li" className="mt-3 mb-5 d-flex justify-content-center">
+                <Nav.Link to="/home" className="text-white d-flex justify-content-center">
+                    <img className="fluid" style={{width: '70%'}} src={Logo}></img>
+                </Nav.Link>
+            </Nav.Item>
+            <Nav.Item as="li" className="mb-3 ms-2 b-sizing">
+                <Nav.Link to="/home" eventKey="link-1" className="text-white fs-6 d-flex align-items-center">
+                    <BsHouseDoorFill className="me-3"/>
+                    Inicio
+                </Nav.Link>
+            </Nav.Item>
+            <Nav.Item as="li" className="mb-3 ms-2 b-sizing">
+                <Nav.Link to="/libroContable" eventKey="link-1" className="text-white fs-6 d-flex align-items-center">
+                    <BsFolderFill className="me-3"/>
+                    Libro Contable
+                </Nav.Link>
+            </Nav.Item>
+            <Nav.Item as="li" className="mb-3 ms-2 b-sizing">
+                <Nav.Link href="/reportes" eventKey="link-2" className="text-white fs-6 d-flex align-items-center">
+                    <BsClipboardDataFill className="me-3"/>
+                    Reportes
+                </Nav.Link>
+            </Nav.Item>
+            <Nav.Item as="li" className="mb-3 ms-2 b-sizing">
+                <Nav.Link eventKey="link-2" className="text-white fs-6 d-flex align-items-center">
+                    <BsFillPeopleFill className="me-3"/>
+                    Usuario
+                </Nav.Link>
+            </Nav.Item>
+            <Nav.Item as="li" className="mb-3 ms-2 b-sizing">
+                <Nav.Link eventKey="link-2" className="text-white fs-6 d-flex align-items-center">
+                    <BsFillCalendarCheckFill className="me-3"/>
+                    Mensualidades
+                </Nav.Link>
+            </Nav.Item>
+            <Nav.Item as="li" className="mb-3 ms-2">
+                <Nav.Link eventKey="link-2" className="text-white fs-6 d-flex align-items-center">
+                    <BsLayersFill className="me-3"/>
+                    Configuraciones
+                </Nav.Link>
+            </Nav.Item>
+        </Nav>
+    );
+}
+
+export default BarraLateral;
