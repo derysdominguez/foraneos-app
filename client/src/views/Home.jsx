@@ -1,9 +1,10 @@
 import React from 'react'
+import BarraLateral from '../components/barraLateral'
 
 function Home() {
   return (
     <>
-        <h1>Bienvenido, $user</h1>
+        {/* Home */}
     </>
   )
 }

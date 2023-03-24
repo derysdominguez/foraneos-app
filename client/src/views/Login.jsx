@@ -20,7 +20,7 @@ function Login() {
                 <Form.Control type="password" placeholder="Contraseña" />
               </Form.Group>
 
-              <Link to='/home'>
+              <Link to='/reportes'>
                 <Button variant="primary" type="submit" className="w-100">
                   Iniciar Sesion
                 </Button>
