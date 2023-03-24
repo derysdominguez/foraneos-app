@@ -11,7 +11,9 @@ function Login() {
         <Row className="h-control bg-light align-items-center text-center px-4 py-4">
           <Col>
             <Form onSubmit={handleSubmit}>
-              <h2>Bienvenido a ForaneosApp</h2>
+
+              <h2>Bienvenido a Foraneos-App</h2>
+
               <Form.Group className="mt-5 mb-3" controlId="formBasicEmail">
                 <Form.Control type="email" placeholder="Usuario" />
               </Form.Group>
@@ -19,14 +21,13 @@ function Login() {
               <Form.Group className="mb-4" controlId="formBasicPassword">
                 <Form.Control type="password" placeholder="Contraseña" />
               </Form.Group>
-
-              <Link to='/home'>
+              <Link to='/reportes'>
                 <Button variant="primary" type="submit" className="w-100">
                   Iniciar Sesion
                 </Button>
               </Link>
               <p className="mt-3 mb-5 fs-6">
-                ¿No tienes cuenta? <b>Consulta con soporte.</b>
+                ¿No tienes cuenta?  <b>Consulta con soporte.</b>
               </p>
 
               <Form.Text className="text-muted mb-5">
