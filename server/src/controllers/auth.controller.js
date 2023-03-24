@@ -11,17 +11,12 @@ async function createUser (req, res) {
     })
     if (userFound) return res.status(400).json({ msg: 'User already exists' })
 
-    const user = await User.create(
-      {
-        username,
-        email,
-        password,
-        role
-      },
-      {
-        fields: ['username', 'email', 'password', 'role']
-      }
-    )
+    const user = await User.create({
+      username,
+      email,
+      password,
+      role
+    })
     if (user) {
       return res.json({
         message: 'User created successfully',
