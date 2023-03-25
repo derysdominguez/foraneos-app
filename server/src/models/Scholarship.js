@@ -13,9 +13,12 @@ const Scholarship = sequelize.define('beca', {
     allowNull: false
   },
   monto: {
-    type: DataTypes.NUMBER(10, 2),
+    type: DataTypes.NUMERIC(10, 2),
     allowNull: false
   }
+},
+{
+  timestamps: false
 })
 
 module.exports = Scholarship
