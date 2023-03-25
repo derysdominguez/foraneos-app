@@ -45,10 +45,15 @@ img {
 
 .h-control {
   height: 75vh;
+  box-sizing: border-box;
 }
 
 .h-control-divTables {
-  height: 18.5rem;
+  height: 15rem;
+}
+
+.hsizing-control {
+  box-sizing: border-box;
 }
 
 /*# sourceMappingURL=index.css.map */

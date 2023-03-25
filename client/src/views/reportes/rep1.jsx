@@ -6,10 +6,12 @@ import HeaderReport from '../../components/Reportes/headerReport'
 import BodyReport1 from '../../components/Reportes/rep1/bodyReport'
 import {BsPrinter, BsArrowLeftCircle} from 'react-icons/bs'
 import { Link } from 'react-router-dom'
+import BtnInferiores from './imprimir'
 
 function Rep1() {
     const Title = 'Listado de ingresos y egresos'
     const Subtitle = 'Mes de marzo'
+    const fechaEmision = '25/3/2023'
     return (
         <>
             <Container fluid>
@@ -22,21 +24,11 @@ function Rep1() {
                             <HeaderTitle></HeaderTitle>
                             <div className='bodyText bg-white w-100 h-control p-4 rounded d-flex align-items-center d-flex gap-2 flex-wrap justify-content-evenly'>
                                 {/* Hacer a componente body report */}
-                                <HeaderReport title={Title} subtitle={Subtitle}></HeaderReport>
+                                <HeaderReport title={Title} subtitle={Subtitle} dateReport={fechaEmision}></HeaderReport>
                                 {/* Cuerpo del report */}
                                 <BodyReport1></BodyReport1>
-                                <div className='w-100 d-flex align-items-center justify-content-end'>
-                                    <Link to={'/reportes'}>
-                                        <button className='btn btn-primary px-3 d-flex align-items-center me-1'>
-                                            <BsArrowLeftCircle className='me-2' />
-                                            <span>Regresar</span>
-                                        </button>
-                                    </Link>
-                                    <button className='btn btn-primary px-3 d-flex align-items-center me-1'>
-                                        <BsPrinter className='me-2' />
-                                        <span>Imprimir</span>
-                                    </button>
-                                </div>
+                                {/* Convertir a componente */}
+                                <BtnInferiores></BtnInferiores>
                             </div>
                         </div>
                     </Col>
