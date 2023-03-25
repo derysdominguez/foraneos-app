@@ -9,16 +9,19 @@ const MonthlyPayment = sequelize.define('pago_mensual', {
   }
 })
 
-MonthlyPayment.belongsTo({
-  model: Student,
-  as: 'alumno_id',
-  foreignKey: { allowNull: false }
+Student.hasMany(MonthlyPayment, {
+  foreignKey: 'codigo_alumno',
+  sourceKey: 'codigo'
+})
+MonthlyPayment.belongsTo(Student, {
+  foreignKey: 'codigo_alumno',
+  targetKey: 'codigo'
 })
 
-MonthlyPayment.belongsTo({
-  model: Entry,
-  as: 'asiento_id',
-  foreignKey: { allowNull: false }
+Entry.hasMany(MonthlyPayment, { foreignKey: 'asiento_id', sourceKey: 'id' })
+MonthlyPayment.belongsTo(Entry, {
+  foreignKey: 'asiento_id',
+  targetKey: 'id'
 })
 
 module.exports = MonthlyPayment
