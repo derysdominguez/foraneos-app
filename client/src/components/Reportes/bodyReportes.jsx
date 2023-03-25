@@ -45,19 +45,19 @@ function BodyReportes() {
                 </Link> 
             </div>
             <div className="rounded shadow-lg border border-dark-subtle p-1 ">
-                <Link to={'/reportes/rep1'} className="p-2 text-decoration-none text-black w-100 h-100 d-flex flex-column align-items-center justify-content-center">
+                <Link to={'/reportes/rep7'} className="p-2 text-decoration-none text-black w-100 h-100 d-flex flex-column align-items-center justify-content-center">
                     <BsFillClipboard2DataFill className="fs-1 mb-3"/>
                     <h3 className="fs-6">Reporte 7</h3>
                 </Link> 
             </div>
             <div className="rounded shadow-lg border border-dark-subtle p-1 ">
-                <Link to={'/reportes/rep1'} className="p-2 text-decoration-none text-black w-100 h-100 d-flex flex-column align-items-center justify-content-center">
+                <Link to={'/reportes/rep8'} className="p-2 text-decoration-none text-black w-100 h-100 d-flex flex-column align-items-center justify-content-center">
                     <BsFillClipboard2DataFill className="fs-1 mb-3"/>
                     <h3 className="fs-6">Reporte 8</h3>
                 </Link> 
             </div>
             <div className="rounded shadow-lg border border-dark-subtle p-1 ">
-                <Link to={'/reportes/rep1'} className="p-2 text-decoration-none text-black w-100 h-100 d-flex flex-column align-items-center justify-content-center">
+                <Link to={'/reportes/rep9'} className="p-2 text-decoration-none text-black w-100 h-100 d-flex flex-column align-items-center justify-content-center">
                     <BsFillClipboard2DataFill className="fs-1 mb-3"/>
                     <h3 className="fs-6">Reporte 9</h3>
                 </Link> 

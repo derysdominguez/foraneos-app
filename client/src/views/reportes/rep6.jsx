@@ -3,13 +3,12 @@ import { Container, Row, Col } from "react-bootstrap";
 import BarraLateral from "../../components/barraLateral";
 import HeaderTitle from "../../components/Reportes/header";
 import HeaderReport from "../../components/Reportes/headerReport";
-import BodyReport5 from "../../components/Reportes/rep5/bodyReport5";
 import BodyReport6 from "../../components/Reportes/rep6/bodyReport";
 import BtnInferiores from "./imprimir";
 
 function Rep6() {
-    const Title = 'Reporte Ganancias y perdidas'
-    const Subtitle = 'Mes de marzo'
+    const Title = 'Informe de porcentaje de alumnos'
+    const Subtitle = 'Becados por grado'
     const fechaEmision = '25/3/2023'
     return(
         <>

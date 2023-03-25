@@ -19,6 +19,10 @@ function TableRep6() {
                     <td>2</td>
                     <td>25</td>
                 </tr>
+                <tr>
+                    <td colSpan={3} className='bg-secondary text-white'>Total</td>
+                    <td className='bg-secondary text-white'>25</td>
+                </tr>
             </tbody>
         </Table>
     </>

@@ -35,13 +35,9 @@ function BarChart(props) {
             position: 'top'
         },
         scales: {
-            yAxes: [
-            {
-                ticks: {
-                    beginAtZero: true
-                }
+            y: {
+                beginAtZero: true
             }
-        ]
         }
     };
     

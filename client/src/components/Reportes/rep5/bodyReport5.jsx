@@ -1,10 +1,11 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import TableGenerator from "../tablaGenerator";
 import TableRep5 from "./dataTable";
 import LineChart from "./graficoLinea";
 
 function BodyReport5() {
-    /* Solo debes de llenar con los datos de la bd */
+    /* Te muestro ejemplo de como llenarala Derys */
     const data = [
         { Month: 'Enero', Ingresos: 20, Egresos: 10 },
         { Month: 'Febrero', Ingresos: 15, Egresos: 7.5 },
@@ -33,12 +34,23 @@ function BodyReport5() {
         { Month: 'Nombre', Ganacias: 35},
         { Month: 'December', Ganacias: 30}
     ];
+    
+    const combinedData = data.map((item) => {
+        const newItem = {...item};
+        const match = data2.find((item2) => item2.Month === newItem.Month);
+        if (match) {
+            newItem.Ganacias = match.Ganacias;
+        }
+        return newItem;
+    });
+
     return(
         <div className='w-100 h-50 overflow-auto p-2 d-flex rounded align-items-center justify-content-center'>
             <div className='col-12 mt-1 h-100 w-100'>
                 <Container>
                     <Row>
-                        <TableRep5/>
+                        {/* <TableRep5/> archivo obsoleto pero por si lo ocupas lo dejare*/}
+                        <TableGenerator data={combinedData}/>
                     </Row>  
                     <Row>
                         <Col>
