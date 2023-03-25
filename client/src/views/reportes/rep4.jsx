@@ -1,18 +1,16 @@
-import React from 'react'
-import { Container, Row, Col} from 'react-bootstrap'
-import BarraLateral from '../../components/barraLateral'
-import HeaderTitle from '../../components/Reportes/header'
-import HeaderReport from '../../components/Reportes/headerReport'
-import BodyReport1 from '../../components/Reportes/rep1/bodyReport'
-import {BsPrinter, BsArrowLeftCircle} from 'react-icons/bs'
-import { Link } from 'react-router-dom'
-import BtnInferiores from './imprimir'
+import React from "react";
+import { Container, Row, Col } from "react-bootstrap";
+import BarraLateral from "../../components/barraLateral";
+import HeaderTitle from "../../components/Reportes/header";
+import HeaderReport from "../../components/Reportes/headerReport";
+import BodyReport4 from "../../components/Reportes/rep4/bodyReport4";
+import BtnInferiores from "./imprimir";
 
-function Rep1() {
-    const Title = 'Listado de ingresos y egresos'
-    const Subtitle = 'Mes de marzo'
+function Rep4() {
+    const Title = 'Reporte de mensualidades'
+    const Subtitle = 'Primer grado'
     const fechaEmision = '25/3/2023'
-    return (
+    return(
         <>
             <Container fluid>
                 <Row>
@@ -26,8 +24,8 @@ function Rep1() {
                                 {/* Hacer a componente body report */}
                                 <HeaderReport title={Title} subtitle={Subtitle} dateReport={fechaEmision}></HeaderReport>
                                 {/* Cuerpo del report */}
-                                <BodyReport1></BodyReport1>
-                                {/* Convertir a componente */}
+                                <BodyReport4></BodyReport4>
+                                {/* Botones inferiores */}
                                 <BtnInferiores></BtnInferiores>
                             </div>
                         </div>
@@ -38,4 +36,4 @@ function Rep1() {
     )
 }
 
-export default Rep1
+export default Rep4;

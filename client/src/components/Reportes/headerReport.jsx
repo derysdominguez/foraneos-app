@@ -7,6 +7,7 @@ function HeaderReport(props) {
             <div className='col-9 d-flex ps-2 flex-column'>
                 <h3 className='text-white'>{props.title}</h3>
                 <h4 className='text-white'>{props.subtitle}</h4>
+                <h6 className='text-white mt-2 fs-6'>Fecha de emision {props.dateReport}</h6>
             </div>
             <div className='col-3 d-flex ps-2 flex-column align-items-end'>
                 <img src={Logo}></img>

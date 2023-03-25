@@ -3,13 +3,11 @@ import { Container, Row, Col} from 'react-bootstrap'
 import BarraLateral from '../../components/barraLateral'
 import HeaderTitle from '../../components/Reportes/header'
 import HeaderReport from '../../components/Reportes/headerReport'
-import BodyReport1 from '../../components/Reportes/rep1/bodyReport'
-import {BsPrinter, BsArrowLeftCircle} from 'react-icons/bs'
-import { Link } from 'react-router-dom'
+import BodyReport2 from '../../components/Reportes/rep2/bodyReport2'
 import BtnInferiores from './imprimir'
 
-function Rep1() {
-    const Title = 'Listado de ingresos y egresos'
+function Rep2() {
+    const Title = 'Informe de deudas'
     const Subtitle = 'Mes de marzo'
     const fechaEmision = '25/3/2023'
     return (
@@ -26,8 +24,8 @@ function Rep1() {
                                 {/* Hacer a componente body report */}
                                 <HeaderReport title={Title} subtitle={Subtitle} dateReport={fechaEmision}></HeaderReport>
                                 {/* Cuerpo del report */}
-                                <BodyReport1></BodyReport1>
-                                {/* Convertir a componente */}
+                                <BodyReport2></BodyReport2>
+                                {/* Botones inferiores */}
                                 <BtnInferiores></BtnInferiores>
                             </div>
                         </div>
@@ -38,4 +36,4 @@ function Rep1() {
     )
 }
 
-export default Rep1
+export default Rep2;
