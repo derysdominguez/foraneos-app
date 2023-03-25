@@ -27,7 +27,7 @@ app.use('/api', indexRoutes)
 app.use(express.static(path.join(__dirname, 'public')))
 
 // sequelize sync
-sequelize.sync({ force: true }).then(() => {
+sequelize.sync({ force: false }).then(() => {
   console.log('Database is connected')
 })
 
