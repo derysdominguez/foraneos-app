@@ -17,8 +17,10 @@ const Entry = sequelize.define('asiento', {
     allowNull: false
   },
   monto: {
-    type: DataTypes.NUMBER(10, 2)
+    type: DataTypes.NUMERIC(10, 2)
   }
+}, {
+  timestamps: false
 })
 
 module.exports = Entry

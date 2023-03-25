@@ -1,0 +1,120 @@
+CREATE TABLE beca (
+	id SERIAL PRIMARY KEY,
+	tipo VARCHAR(30) NOT NULL,
+	valor NUMERIC(11,2) NOT NULL
+);
+
+CREATE TYPE grado AS ENUM (
+	'Kinder',
+	'Preparatoria',
+	'Primero',
+	'Segundo',
+	'Tercero',
+	'Cuarto',
+	'Quinto',
+	'Sexto',
+	'Septimo',
+	'Octavo',
+	'Noveno',
+	'Decimo',
+	'Undecimo'
+);
+
+CREATE TABLE alumno (
+	id SERIAL PRIMARY KEY,
+	codigo INTEGER NOT NULL,
+	nombre VARCHAR NOT NULL,
+	grado grado NOT NULL,
+	beca INTEGER REFERENCES Beca (id)
+);
+
+
+
+CREATE TYPE clasificacion AS ENUM (
+	'activo',
+	'pasivo',
+	'patrimonio',
+	'ingreso',
+	'gasto_ventas',
+	'gasto_admin'
+);
+
+CREATE TYPE naturaleza AS ENUM (
+	'D', 'H'
+);
+
+CREATE TYPE entrada AS ENUM (
+	'I', 'E'
+);
+
+CREATE TYPE tipocuenta AS ENUM (
+	'cuenta', 'subcuenta', 'mixta' 
+);
+
+CREATE TABLE cuenta (
+	id SERIAL PRIMARY KEY,
+	nombre VARCHAR NOT NULL,
+	clasificacion clasificacion NOT NULL,
+	naturaleza naturaleza NOT NULL,
+	entrada entrada NULL,
+	tipocuenta tipocuenta NOT NULL
+);
+
+CREATE TABLE asiento (
+	id SERIAL PRIMARY KEY,
+	fecha DATE NOT NULL,
+	descripcion TEXT NOT NULL,
+	monto NUMERIC(11,2) NULL
+);
+
+CREATE TABLE asientodetalle (
+	asientoid INTEGER REFERENCES asiento (id),
+	cuentaid INTEGER REFERENCES cuenta (id),
+	lado naturaleza NOT NULL,
+	monto NUMERIC(11,2) NOT NULL,
+	PRIMARY KEY (asientoid, cuentaid)
+);
+
+CREATE TYPE  month_enum AS ENUM (
+	'Enero',
+	'Febrero',
+	'Marzo',
+	'Abril',
+	'Mayo',
+	'Junio',
+	'Julio',
+	'Agosto',
+	'Septiembre',
+	'Octubre',
+	'Noviembre',
+	'Diciembre'
+);
+
+
+CREATE TABLE mensualidad (
+	alumnoid INTEGER REFERENCES alumno (id),
+	asientoid INTEGER REFERENCES asiento (id),
+	mes month_enum NOT NULL
+);
+
+
+CREATE TABLE deuda (
+	id SERIAL PRIMARY KEY,
+	acreedor VARCHAR NOT NULL,
+	cuota NUMERIC(11,2) NOT NULL,
+	fecha_finalizacion DATE NOT NULL,
+	tasa NUMERIC(11,2) NOT NULL,
+	asientoid INT REFERENCES asiento (id)
+);
+
+CREATE TABLE pago_matricula (
+	alumnoid INTEGER REFERENCES alumno (id),
+	asientoid INTEGER REFERENCES asiento (id),
+	PRIMARY KEY (alumnoid, asientoid)
+);
+
+CREATE TABLE cancelacion_matricula (
+	alumnoid INTEGER REFERENCES alumno (id),
+	fecha_registro DATE NOT NULL,
+	motivo TEXT NULL
+);

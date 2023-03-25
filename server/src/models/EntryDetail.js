@@ -10,21 +10,29 @@ const EntryDetail = sequelize.define('asiento_detalle', {
     allowNull: false
   },
   monto: {
-    type: DataTypes.NUMBER(10, 2),
+    type: DataTypes.NUMERIC(10, 2),
     allowNull: false
   }
+}, {
+  timestamps: false
 })
 
-EntryDetail.belongsTo({
-  model: Entry,
+Entry.hasMany(EntryDetail, {
   foreignKey: 'asiento_id',
-  allowNull: false
+  sourceKey: 'id'
+})
+EntryDetail.belongsTo(Entry, {
+  foreignKey: 'asiento_id',
+  targetKey: 'id'
 })
 
-EntryDetail.belongsTo({
-  model: Account,
+Account.hasMany(EntryDetail, {
   foreignKey: 'cuenta_id',
-  allowNull: false
+  sourceKey: 'id'
+})
+EntryDetail.belongsTo(Account, {
+  foreignKey: 'cuenta_id',
+  targetKey: 'id'
 })
 
 module.exports = EntryDetail

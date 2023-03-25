@@ -28,6 +28,8 @@ const Account = sequelize.define('cuenta', {
     type: 'tipo_cuenta',
     allowNull: false
   }
+}, {
+  timestamps: false
 })
 
 module.exports = Account
