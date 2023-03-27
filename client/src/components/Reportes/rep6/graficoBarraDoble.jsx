@@ -16,7 +16,7 @@ function BarChart(props) {
                 data: becados
             },
             {
-                label: 'Sin becas',
+                label: 'Media becas',
                 backgroundColor: 'rgba(255,99,132,1)',
                 borderColor: 'rgba(0,0,0,1)',
                 borderWidth: 1,
