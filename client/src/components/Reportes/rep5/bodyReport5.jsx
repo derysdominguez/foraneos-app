@@ -1,48 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import TableGenerator from "../tablaGenerator";
-import TableRep5 from "./dataTable";
+
 import LineChart from "./graficoLinea";
 
 function BodyReport5() {
     /* Te muestro ejemplo de como llenarala Derys */
-    const data = [
-        { Month: 'Enero', Ingresos: 20, Egresos: 10 },
-        { Month: 'Febrero', Ingresos: 15, Egresos: 7.5 },
-        { Month: 'Marzo', Ingresos: 25, Egresos: 12.5 },
-        { Month: 'April', Ingresos: 30, Egresos: 15 },
-        { Month: 'Mayo', Ingresos: 35, Egresos: 17.5 },
-        { Month: 'Junio', Ingresos: 40, Egresos: 20 },
-        { Month: 'Julio', Ingresos: 45, Egresos: 22.5 },
-        { Month: 'Agosto', Ingresos: 50, Egresos: 25 },
-        { Month: 'Septiembre', Ingresos: 45, Egresos: 22.5 },
-        { Month: 'Octubre', Ingresos: 40, Egresos: 20 },
-        { Month: 'Nombre', Ingresos: 35, Egresos: 17.5 },
-        { Month: 'December', Ingresos: 30, Egresos: 15 }
-    ];
-    const data2 = [
-        { Month: 'Enero', Ganacias: 20},
-        { Month: 'Febrero', Ganacias: 15},
-        { Month: 'Marzo', Ganacias: 25},
-        { Month: 'April', Ganacias: 30},
-        { Month: 'Mayo', Ganacias: 35},
-        { Month: 'Junio', Ganacias: 40},
-        { Month: 'Julio', Ganacias: 45},
-        { Month: 'Agosto', Ganacias: 50},
-        { Month: 'Septiembre', Ganacias: 45},
-        { Month: 'Octubre', Ganacias: 40},
-        { Month: 'Nombre', Ganacias: 35},
-        { Month: 'December', Ganacias: 30}
-    ];
-    
-    const combinedData = data.map((item) => {
-        const newItem = {...item};
-        const match = data2.find((item2) => item2.Month === newItem.Month);
-        if (match) {
-            newItem.Ganacias = match.Ganacias;
+    const url = 'https://apimocha.com/foraneos-app/rep5'
+    const [data, setData] = useState()
+    const [ganancias, setGanancias] = useState()
+    const [sincombinate, setSinCombinate] = useState()
+
+    const api = async () => {
+        try {
+            const response = await fetch(url);
+            const lbJSON = await response.json();
+            
+            const sinColumnaGanancia = lbJSON.map(item => {
+                const {ganancias,...resto} = item
+                return resto
+            })
+
+            const soloGanancias = lbJSON.map(item => {
+                const {ingresos, egresos, ...resto} = item
+                return resto
+            })
+
+            setGanancias(soloGanancias)
+            setSinCombinate(sinColumnaGanancia)
+            setData(lbJSON)
+        } catch (error) {
+            console.error(error);
         }
-        return newItem;
-    });
+    }
+    
+    useEffect(()=> {
+        api()
+    }, []) 
+
 
     return(
         <div className='w-100 h-50 overflow-auto p-2 d-flex rounded align-items-center justify-content-center'>
@@ -50,18 +45,18 @@ function BodyReport5() {
                 <Container>
                     <Row>
                         {/* <TableRep5/> archivo obsoleto pero por si lo ocupas lo dejare*/}
-                        <TableGenerator data={combinedData}/>
+                        <TableGenerator data={data ? data : [{'Estado': 'Cargando...'}]}/>
                     </Row>  
                     <Row>
                         <Col>
                             <h6 className="mt-4">Ingresos y egresos:</h6>
                             <hr/>
-                            <LineChart data={data} />
+                            <LineChart data={sincombinate ? sincombinate : [{'Estado': 0}]} />
                         </Col>
                         <Col>
                             <h6 className="mt-4">Ganancias: </h6>
                             <hr/>
-                            <LineChart data={data2} />
+                            <LineChart data={ganancias ? ganancias : [{'Estado': 0}]} />
                         </Col>
                     </Row>
                 </Container>

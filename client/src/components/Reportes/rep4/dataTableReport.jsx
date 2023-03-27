@@ -1,12 +1,32 @@
 import Table from 'react-bootstrap/Table';
 
-function TableRep4() {
+function TableRep4(props){
+  const { data } = props;
+  const renderTableRows = () => {
+    return (
+      <tbody>
+        {data.map((item, index) => {
+          // Generar una clave única
+          const key = `row-${index}`;
+          
+          return (
+            <tr key={key}>
+              {Object.values(item).map((value, index) => {
+                const key = `col-${index}`;
+                return <td className='col-12' key={key}>{value}</td>;
+              })}
+            </tr>
+          );
+        })}
+      </tbody>
+    );
+  };
+  
   return (
     <>
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th rowSpan={2} className='text-center'>#</th>
             <th rowSpan={2} className='text-center'>Nombre alumno</th>
             <th rowSpan={2} className='text-center'>Codigo</th>
             <th rowSpan={2} className='text-center'>Mensualidad</th>
@@ -25,56 +45,7 @@ function TableRep4() {
             <th className='text-center'>J</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <th className='fs-6'>1</th>
-            <th className='fs-6'>Ashley Izaguirre</th>
-            <th className='fs-6'>20222023046</th>
-            <th className='fs-6'>1.325,00</th>
-            <th className='fs-6'>17/09</th>
-            <th className='fs-6'>17/09</th>
-            <th className='fs-6'>17/09</th>
-            <th className='fs-6'>17/09</th>
-            <th className='fs-6'>17/09</th>
-            <th className='fs-6'>17/09</th>
-            <th className='fs-6'>17/09</th>
-            <th className='fs-6'>17/09</th>
-            <th className='fs-6'>17/09</th>
-            <th className='fs-6'>17/09</th>
-          </tr>
-          <tr>
-            <th className='fs-6'>1</th>
-            <th className='fs-6'>Ashley Izaguirre</th>
-            <th className='fs-6'>20222023046</th>
-            <th className='fs-6'>1.325,00</th>
-            <th className='fs-6'>17/09</th>
-            <th className='fs-6'>17/09</th>
-            <th className='fs-6'>17/09</th>
-            <th className='fs-6'>17/09</th>
-            <th className='fs-6'>17/09</th>
-            <th className='fs-6'>17/09</th>
-            <th className='fs-6'>17/09</th>
-            <th className='fs-6'>17/09</th>
-            <th className='fs-6'>17/09</th>
-            <th className='fs-6'>17/09</th>
-          </tr>
-          <tr>
-            <th className='fs-6'>1</th>
-            <th className='fs-6'>Ashley Izaguirre</th>
-            <th className='fs-6'>20222023046</th>
-            <th className='fs-6'>1.325,00</th>
-            <th className='fs-6'>17/09</th>
-            <th className='fs-6'>17/09</th>
-            <th className='fs-6'>17/09</th>
-            <th className='fs-6'>17/09</th>
-            <th className='fs-6'>17/09</th>
-            <th className='fs-6'>17/09</th>
-            <th className='fs-6'>17/09</th>
-            <th className='fs-6'>17/09</th>
-            <th className='fs-6'>17/09</th>
-            <th className='fs-6'>17/09</th>
-          </tr>
-        </tbody>
+        {renderTableRows()}
       </Table>
     </>
   );
