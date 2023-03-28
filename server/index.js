@@ -29,11 +29,6 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'))
 })
 
-// sequelize sync
-sequelize.sync({ force: false }).then(() => {
-  console.log('Database is connected')
-})
-
 app.listen(PORT, () => {
   console.log(`Server listening on http://localhost:${PORT}`)
 })
