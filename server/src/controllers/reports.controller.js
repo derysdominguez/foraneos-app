@@ -17,14 +17,10 @@ const getIncomeAndExpensesReport = async (req, res) => {
         {
           model: Entry,
           attributes: ['fecha', 'descripcion']
-        },
-        {
-          model: Account,
-          attributes: ['nombre', 'clasificacion', 'naturaleza', 'entrada', 'tipo_cuenta']
         }
       ]
     })
-    res.status(200).json(entries)
+    res.status(200).json({ entries })
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
