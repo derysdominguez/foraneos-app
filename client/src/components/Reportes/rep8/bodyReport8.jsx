@@ -19,6 +19,7 @@ function BodyReport8() {
         try {
             const response = await fetch(url);
             const lbJSON = await response.json();
+
             lbJSON.sort((a,b) => {
                 const grados = ['Kinder', 'Preparatoria', 'Primero', 'Segundo', 'Tercero', 'Cuarto', 'Quinto',
                                 'Sexto', 'Septimo', 'Octavo', 'Noveno', 'Decimo', 'Undecimo'];
@@ -38,6 +39,7 @@ function BodyReport8() {
     useEffect(()=> {
         api()
     }, []) 
+
 
     const handleGradoChange = (selectedGrado) => {
         let filtrado;

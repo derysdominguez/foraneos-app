@@ -5,13 +5,14 @@ import GradoSelect from "../../GradoSelect";
 
 function BodyReport4() {
     const url = 'https://apimocha.com/foraneos-app/rep4'
+
     const [data, setData] = useState();
     const [datosGrado, setDatosGrado] = useState();
-
     const api = async () => {
         try {
             const response = await fetch(url);
             const lbJSON = await response.json();
+
             lbJSON.sort((a,b) => {
                 if(a.codigo < b.codigo) return -1;
                 if(a.codigo > b.codigo) return 1;
@@ -26,6 +27,7 @@ function BodyReport4() {
     useEffect(()=> {
         api()
     }, []) 
+
     
     const handleGradoChange = (selectedGrado) => {
         const filtrado = data.filter(item => item.grado === selectedGrado);
@@ -41,6 +43,7 @@ function BodyReport4() {
         <div className='w-100 h-50 overflow-auto p-2 d-flex rounded align-items-center justify-content-center'>
             
             <div className='col-12 mt-1 h-100'>
+
             <GradoSelect onGradoChange={handleGradoChange}></GradoSelect>
                 <TableRep4 data={datosGrado ?  datosGrado : [{'Estado': 'Cargando...'}]} />
             </div>

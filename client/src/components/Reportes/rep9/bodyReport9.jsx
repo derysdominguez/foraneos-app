@@ -14,6 +14,7 @@ function BodyReport9() {
         try {
             const response = await fetch(url);
             const lbJSON = await response.json();
+
             lbJSON.sort((a,b) => {
                 const grados = ['Kinder', 'Preparatoria', 'Primero', 'Segundo', 'Tercero', 'Cuarto', 'Quinto',
                                 'Sexto', 'Septimo', 'Octavo', 'Noveno', 'Decimo', 'Undecimo'];

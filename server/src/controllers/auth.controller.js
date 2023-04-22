@@ -1,59 +1,51 @@
-const { createToken, comparePassword } = require('../utils/utils')
 const User = require('../models/User')
+const bcrypt = require('bcrypt')
+const { comparePassword, createToken } = require('../utils/utils')
 
-async function createUser (req, res) {
-  const { username, email, password, role } = req.body
+const createUser = async (req, res) => {
+  const { name, email, password } = req.body
   try {
-    const userFound = await User.findOne({
-      where: {
-        email
-      }
-    })
-    if (userFound) return res.status(400).json({ msg: 'User already exists' })
-
-    const user = await User.create({
-      username,
-      email,
-      password,
-      role
-    })
-    if (user) {
-      return res.json({
-        message: 'User created successfully',
-        data: user
-      })
+    const userFound = await User.getFindUserByEmail({ email })
+    if (userFound) {
+      return res.status(400).json({ message: 'User already exists' })
     }
-  } catch (e) {
-    console.log(e)
-    res.status(500).json({
-      message: 'Something goes wrong'
-    })
+    const hash = bcrypt.hashSync(password, 10)
+    const user = await User.createUser({ name, email, password: hash })
+    res.status(201).json({ user })
+  } catch (error) {
+    res.status(500).json({ message: 'Something went wrong' })
   }
 }
 
-async function login (req, res) {
+const login = async (req, res) => {
   const { email, password } = req.body
   try {
-    const userFound = await User.findOne({
-      where: {
-        email
-      }
-    })
-    if (!userFound) return res.status(400).json({ msg: 'User not found' })
+    const user = await User.getFindUserByEmail({ email })
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' })
+    }
+    const isMatch = comparePassword(password, user.password)
+    if (isMatch) {
+      const token = createToken(user)
+      return res.status(200).json({ token })
+    }
+    res.status(400).json({ message: 'Invalid credentials' })
+  } catch (error) {
+    res.status(500).json({ message: 'Something went wrong' })
+  }
+}
 
-    const matchPassword = comparePassword(password, userFound.password)
-
-    if (!matchPassword) return res.status(401).json({ token: null, msg: 'Invalid password' })
-
-    const token = createToken(userFound)
-
-    res.status(200).json({ token })
-  } catch (e) {
-    res.status(500).json({ msg: 'Something goes wrong' })
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.getAllUsers()
+    res.json({ users })
+  } catch (error) {
+    res.status(500).json({ message: 'Something went wrong' })
   }
 }
 
 module.exports = {
   createUser,
-  login
+  login,
+  getAllUsers
 }

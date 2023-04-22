@@ -25,10 +25,8 @@ app.use('/api', indexRoutes)
 
 // front-end
 app.use(express.static(path.join(__dirname, 'public')))
-
-// sequelize sync
-sequelize.sync({ force: false }).then(() => {
-  console.log('Database is connected')
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'))
 })
 
 app.listen(PORT, () => {

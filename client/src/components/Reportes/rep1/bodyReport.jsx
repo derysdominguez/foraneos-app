@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Table, Toast } from 'react-bootstrap';
 import TableGenerator from "../tablaGenerator";
@@ -107,4 +108,4 @@ function BodyReport1() {
     )
 }
 
-export default BodyReport1;
+export default BodyReport1

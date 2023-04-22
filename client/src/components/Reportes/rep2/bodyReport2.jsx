@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import TableGenerator from "../tablaGenerator";
 
+
 const convertDateFormat = dateString => {
     // Obtener los componentes de la fecha (día, mes, año) usando la función split()
     const dateComponents = dateString.split("/");
@@ -11,7 +12,6 @@ const convertDateFormat = dateString => {
     return new Date(year, month - 1, day);
 }
 
-
 function BodyReport2() {
     /* Es ejemplo, mandas el arreglo de objetos   */
     const url = 'https://apimocha.com/foraneos-app/rep2'
@@ -21,6 +21,7 @@ function BodyReport2() {
         try {
             const response = await fetch(url);
             const lbJSON = await response.json();
+
             lbJSON.sort((a,b) => {
                 const fecha1 = convertDateFormat(a.fecha_final);
                 const fecha2 = convertDateFormat(b.fecha_final);
@@ -28,6 +29,7 @@ function BodyReport2() {
                 if (fecha1 > fecha2) return 1;
                 return 0;
             })
+
             setData(lbJSON)
         } catch (error) {
             console.error(error);
