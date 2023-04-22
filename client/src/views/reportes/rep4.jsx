@@ -8,8 +8,8 @@ import BtnInferiores from "./imprimir";
 
 function Rep4() {
     const Title = 'Reporte de mensualidades'
-    const Subtitle = 'Por grado'
-    const fechaEmision = '28/3/2023'
+    const Subtitle = 'Primer grado'
+    const fechaEmision = '25/3/2023'
     return(
         <>
             <Container fluid>

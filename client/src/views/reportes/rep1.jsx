@@ -10,8 +10,8 @@ import BtnInferiores from './imprimir'
 
 function Rep1() {
     const Title = 'Listado de ingresos y egresos'
-    const Subtitle = 'Por mes'
-    const fechaEmision = '28/3/2023'
+    const Subtitle = 'Mes de marzo'
+    const fechaEmision = '25/3/2023'
     return (
         <>
             <Container fluid>
@@ -26,7 +26,7 @@ function Rep1() {
                                 {/* Hacer a componente body report */}
                                 <HeaderReport title={Title} subtitle={Subtitle} dateReport={fechaEmision}></HeaderReport>
                                 {/* Cuerpo del report */}
-                                <BodyReport1></BodyReport1>
+                                <BodyReport1 ></BodyReport1>
                                 {/* Convertir a componente */}
                                 <BtnInferiores></BtnInferiores>
                             </div>

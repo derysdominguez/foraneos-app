@@ -9,7 +9,7 @@ import BtnInferiores from "./imprimir";
 function Rep5() {
     const Title = 'Reporte Ganancias y perdidas'
     const Subtitle = 'Mes de marzo'
-    const fechaEmision = '28/3/2023'
+    const fechaEmision = '25/3/2023'
     return(
         <>
             <Container fluid>
