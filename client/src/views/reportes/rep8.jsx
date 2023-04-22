@@ -10,7 +10,7 @@ import BtnInferiores from "./imprimir";
 function Rep9() {
     const Title = 'Informe de alumnos con pago perfecto'
     const Subtitle = 'Anio lectivo 2022-2023'
-    const fechaEmision = '25/3/2023'
+    const fechaEmision = '28/3/2023'
     return(
         <>  
             <Container fluid>

@@ -9,7 +9,7 @@ import BtnInferiores from './imprimir'
 function Rep2() {
     const Title = 'Informe de deudas'
     const Subtitle = 'Mes de marzo'
-    const fechaEmision = '25/3/2023'
+    const fechaEmision = '28/3/2023'
     return (
         <>
             <Container fluid>

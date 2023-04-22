@@ -9,7 +9,7 @@ import BtnInferiores from "./imprimir";
 function Rep6() {
     const Title = 'Informe de porcentaje de alumnos'
     const Subtitle = 'Becados por grado'
-    const fechaEmision = '25/3/2023'
+    const fechaEmision = '28/3/2023'
     return(
         <>
             <Container fluid>

@@ -10,8 +10,8 @@ import BtnInferiores from './imprimir'
 
 function Rep1() {
     const Title = 'Listado de ingresos y egresos'
-    const Subtitle = 'Mes de marzo'
-    const fechaEmision = '25/3/2023'
+    const Subtitle = 'Por mes'
+    const fechaEmision = '28/3/2023'
     return (
         <>
             <Container fluid>

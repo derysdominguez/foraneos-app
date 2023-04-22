@@ -9,7 +9,7 @@ import BtnInferiores from "./imprimir";
 function Rep7() {
     const Title = 'Informe de porcentaje'
     const Subtitle = 'de alumnos con mora'
-    const fechaEmision = '25/3/2023'
+    const fechaEmision = '28/3/2023'
     return(
         <>
             <Container fluid>

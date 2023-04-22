@@ -8,9 +8,9 @@ import BodyReport3 from '../../components/Reportes/rep3/bodyReport3'
 import BtnInferiores from './imprimir'
 
 function Rep3() {
-    const Title = 'Estado de situacion financiera'
+    const Title = 'Estado de resultado'
     const Subtitle = 'Mes de marzo'
-    const fechaEmision = '25/3/2023'
+    const fechaEmision = '28/3/2023'
     return (
         <>
             <Container fluid>
