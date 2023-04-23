@@ -3,14 +3,14 @@ const bcrypt = require('bcrypt')
 const { comparePassword, createToken } = require('../utils/utils')
 
 const createUser = async (req, res) => {
-  const { name, email, password } = req.body
+  const { name, email, password, role } = req.body
   try {
     const userFound = await User.getFindUserByEmail({ email })
     if (userFound) {
       return res.status(400).json({ message: 'User already exists' })
     }
     const hash = bcrypt.hashSync(password, 10)
-    const user = await User.createUser({ name, email, password: hash })
+    const user = await User.createUser({ name, email, password: hash, role })
     res.status(201).json({ user })
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong' })
@@ -38,7 +38,7 @@ const login = async (req, res) => {
 const getAllUsers = async (req, res) => {
   try {
     const users = await User.getAllUsers()
-    res.json({ users })
+    res.status(200).json({ users })
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong' })
   }

@@ -1,120 +1,99 @@
-CREATE TABLE beca (
-	id SERIAL PRIMARY KEY,
-	tipo VARCHAR(30) NOT NULL UNIQUE,
-	valor NUMERIC(11,2) NOT NULL
-);
-
-CREATE TYPE grado AS ENUM (
-	'Kinder',
-	'Preparatoria',
-	'Primero',
-	'Segundo',
-	'Tercero',
-	'Cuarto',
-	'Quinto',
-	'Sexto',
-	'Septimo',
-	'Octavo',
-	'Noveno',
-	'Decimo',
-	'Undecimo'
-);
-
-CREATE TABLE alumno (
-	id SERIAL PRIMARY KEY,
-	codigo INTEGER NOT NULL,
-	nombre VARCHAR NOT NULL,
-	grado grado NOT NULL,
-	beca INTEGER REFERENCES Beca (id)
-);
-
-
-
 CREATE TYPE clasificacion AS ENUM (
-	'activo',
-	'pasivo',
-	'patrimonio',
-	'ingreso',
-	'gasto_ventas',
-	'gasto_admin'
+    'activo',
+    'pasivo',
+    'patrimonio',
+    'ingreso',
+  'gasto'
 );
 
 CREATE TYPE naturaleza AS ENUM (
-	'D', 'H'
+    'D',
+    'C'
 );
 
 CREATE TYPE entrada AS ENUM (
-	'I', 'E'
+    'I',
+    'E'
 );
 
 CREATE TYPE tipocuenta AS ENUM (
-	'cuenta', 'subcuenta', 'mixta' 
+    'cuenta',
+    'subcuenta',
+    'mixta' 
+);
+
+CREATE TYPE meses AS ENUM (
+    'Enero',
+    'Febrero',
+    'Marzo',
+    'Abril',
+    'Mayo',
+    'Junio',
+    'Julio',
+    'Agosto',
+    'Septiembre',
+    'Octubre',
+    'Noviembre',
+    'Diciembre'
 );
 
 CREATE TABLE cuenta (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR NOT NULL,
+    clasificacion clasificacion NOT NULL,
+    naturaleza naturaleza NOT NULL,
+    tipocuenta tipocuenta NOT NULL
+);
+
+CREATE TABLE transaccion (
+    id SERIAL PRIMARY KEY,
+    fecha DATE NOT NULL,
+    descripcion TEXT NOT NULL
+);
+
+CREATE TABLE ingreso (
 	id SERIAL PRIMARY KEY,
-	nombre VARCHAR NOT NULL,
-	clasificacion clasificacion NOT NULL,
-	naturaleza naturaleza NOT NULL,
-	entrada entrada NULL,
-	tipocuenta tipocuenta NOT NULL
+	cuenta_id INTEGER REFERENCES cuenta (id),
+	transaccion_id INTEGER REFERENCES transaccion (id),
+	monto NUMERIC(11,2) NOT NULL
 );
 
-CREATE TABLE asiento (
+
+CREATE TABLE gasto (
 	id SERIAL PRIMARY KEY,
-	fecha DATE NOT NULL,
-	descripcion TEXT NOT NULL,
-	monto NUMERIC(11,2) NULL
+	cuenta_id INTEGER REFERENCES cuenta (id),
+	transaccion_id INTEGER REFERENCES transaccion (id),
+	monto NUMERIC(11,2) NOT NULL
 );
 
-CREATE TABLE asientodetalle (
-	asientoid INTEGER REFERENCES asiento (id),
-	cuentaid INTEGER REFERENCES cuenta (id),
-	lado naturaleza NOT NULL,
-	monto NUMERIC(11,2) NOT NULL,
-	PRIMARY KEY (asientoid, cuentaid)
+CREATE TABLE detalle_transaccion (
+    transaccion_id INTEGER REFERENCES transaccion (id),
+    cuenta_id INTEGER REFERENCES cuenta (id),
+    naturaleza naturaleza NOT NULL,
+    monto NUMERIC(11,2) NOT NULL,
+    PRIMARY KEY (transaccion_id, cuenta_id)
 );
 
-CREATE TYPE  month_enum AS ENUM (
-	'Enero',
-	'Febrero',
-	'Marzo',
-	'Abril',
-	'Mayo',
-	'Junio',
-	'Julio',
-	'Agosto',
-	'Septiembre',
-	'Octubre',
-	'Noviembre',
-	'Diciembre'
+CREATE TABLE alumno (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR NOT NULL,
+    codigo INTEGER NOT NULL UNIQUE,
+  	activo BOOLEAN NOT NULL DEFAULT false
 );
-
 
 CREATE TABLE mensualidad (
-	alumnoid INTEGER REFERENCES alumno (id),
-	asientoid INTEGER REFERENCES asiento (id),
-	mes month_enum NOT NULL
+    id SERIAL PRIMARY KEY,
+    alumno_id INTEGER REFERENCES alumno (id),
+    mes meses NOT NULL,
+    monto NUMERIC(11,2) NOT NULL,
+    transaccion_id INTEGER REFERENCES transaccion (id)
 );
 
-
-CREATE TABLE deuda (
+CREATE TABLE usuarios(
 	id SERIAL PRIMARY KEY,
-	acreedor VARCHAR NOT NULL,
-	cuota NUMERIC(11,2) NOT NULL,
-	fecha_finalizacion DATE NOT NULL,
-	tasa NUMERIC(11,2) NOT NULL,
-	asientoid INT REFERENCES asiento (id)
+  username VARCHAR(20) NOT NULL DEFAULT 'user',
+  email VARCHAR(100) NOT NULL UNIQUE,
+  password VARCHAR(100) NOT NULL,
+  rol VARCHAR(20) NOT NULL DEFAULT 'admin'
 );
 
-CREATE TABLE pago_matricula (
-	alumnoid INTEGER REFERENCES alumno (id),
-	asientoid INTEGER REFERENCES asiento (id),
-	PRIMARY KEY (alumnoid, asientoid)
-);
-
-CREATE TABLE cancelacion_matricula (
-	alumnoid INTEGER REFERENCES alumno (id),
-	fecha_registro DATE NOT NULL,
-	motivo TEXT NULL
-);

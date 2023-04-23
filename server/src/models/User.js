@@ -1,10 +1,10 @@
 const db = require('../database/database')
 
-const createUser = async ({ name, email, password }) => {
+const createUser = async ({ name, email, password, role }) => {
   try {
     const user = await db.query(
-      'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *',
-      [name, email, password]
+      'INSERT INTO users (username, email, password, role) VALUES ($1, $2, $3, $4) RETURNING *',
+      [name, email, password, role]
     )
     return user.rows[0]
   } catch (error) {
