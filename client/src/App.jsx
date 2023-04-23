@@ -18,6 +18,7 @@ import Rep8 from './views/reportes/rep8';
 import Rep9 from './views/reportes/rep9';
 import Rep3 from './views/reportes/rep3';
 import Usuarios from './views/Usuarios';
+import CancelacionMatricula from './views/CancelacionMatricula';
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/libroContable" element = {<LibroContable />} />
         <Route path="/mensualidad" element = {<Mensualidad />} />
+        <Route path="/cancelacion" element = {<CancelacionMatricula />} />
         <Route path="/usuarios" element = {<Usuarios />} />
         <Route path="/reportes" element = {<Reportes />} />
         <Route path="/reportes/rep1" element = {<Rep1 />} />

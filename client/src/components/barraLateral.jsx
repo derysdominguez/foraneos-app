@@ -44,6 +44,12 @@ function BarraLateral() {
                     Mensualidades
                 </Nav.Link>
             </Nav.Item>
+            <Nav.Item as="li" className="mb-3 ms-2 b-sizing">
+                <Nav.Link href="/cancelacion" eventKey="link-2" className="text-white fs-6 d-flex align-items-center">
+                    <BsFillCalendarCheckFill className="me-3"/>
+                    Cancelacion de Matrícula
+                </Nav.Link>
+            </Nav.Item>
         </Nav>
     );
 }
