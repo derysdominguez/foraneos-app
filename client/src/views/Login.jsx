@@ -19,7 +19,7 @@ function Login() {
     if(credentials.password !== 'admin'){
       return setError('Contrasena incorrecta')
     }
-    navigate('/Mensualidad')
+    navigate('/Home')
   }
 
   return (

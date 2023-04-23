@@ -8,7 +8,7 @@ function GradoSelect(props) {
   }
 
   return (
-      <FormSelect className="mb-3" onChange={handleChange}>
+      <FormSelect onChange={handleChange}>
         <option disabled selected value="00">Seleccione un grado</option>
         {props.opcionTodos? <option value="todos">Mostrar todos</option> : "" }
         <option value="kinder">Kinder</option>

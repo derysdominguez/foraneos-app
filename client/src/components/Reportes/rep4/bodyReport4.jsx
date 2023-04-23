@@ -44,7 +44,7 @@ function BodyReport4() {
             
             <div className='col-12 mt-1 h-100'>
 
-            <GradoSelect onGradoChange={handleGradoChange}></GradoSelect>
+                <GradoSelect onGradoChange={handleGradoChange}></GradoSelect>
                 <TableRep4 data={datosGrado ?  datosGrado : [{'Estado': 'Cargando...'}]} />
             </div>
         </div>

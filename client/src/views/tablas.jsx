@@ -1,10 +1,27 @@
-import React from 'react';
-import {Table, Button} from 'react-bootstrap';
+import React, { useState } from 'react';
+import {Table, Button, Modal, Form} from 'react-bootstrap';
 import {AiOutlineEdit} from 'react-icons/ai'
-import {BsTrash} from 'react-icons/bs'
 
 function TableBtn(props) {
-    const { data } = props;
+    const { valor } = props;
+    const [showModal, setShowModal] = useState(false);
+    const [dateMen, setDateMen] = useState([{}])
+
+    const data = valor.map(({ codigo, nombre ,mensualidad,...resto}) =>
+        ({codigo, nombre, mensualidad})
+    )
+
+    const meses = valor.map(({grado, codigo, nombre ,mensualidad,...resto}) =>
+        ({...resto})
+    )   
+
+    
+    const handleClose = () => setShowModal(false);
+
+    const handleShow = (va) => {
+        setDateMen(meses[va])
+        setShowModal(true)
+    }
 
     const renderTableHeader = () => {
         return (
@@ -21,35 +38,62 @@ function TableBtn(props) {
 
     const renderTableRows = () => {
         return (
-        <tbody>
-            {data.map((item, index) => {
-                // Generar una clave única
-                const key = `row-${index}`;
-        
-                return (
-                    <tr key={key}>
-                    {Object.values(item).map((value, index) => {
-                        const key = `col-${index}`;
-                        return <td key={key}>{value}</td>;
-                    })}
-                        <td className='d-flex gap-1 justify-content-center'>
-                            <Button variant='warning'><AiOutlineEdit/></Button>
-                            <Button variant='danger'><BsTrash/></Button>
-                        </td>
-                    </tr>
-                    
-                );
-            })}
-        </tbody>
+            <tbody>
+                {data.map((item, index) => {
+                    const key = `row-${index}`;
+                    return (
+                        <tr key={key}>
+                            {Object.values(item).map((value, index) => {
+                                const key = `col-${index}`;
+                                return <td key={key}>{value}</td>;
+                            })}
+                            <td className='d-flex gap-1 justify-content-center'>
+                                <Button variant='warning' onClick={()=> handleShow(index)}><AiOutlineEdit/></Button>
+                            </td>
+                        </tr>
+                        
+                    );
+                })}
+            </tbody>
         );
     };
     
+    const renderModal = () => {
+        return(
+            <Modal show={showModal} onHide={handleClose} size="md" aria-labelledby="contained-modal-title-vcenter" centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Datos del alumno</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        {Object.keys(dateMen).map((propiedad, index) => (
+                            <Form.Group key={index} className='mb-3 d-flex'>
+                                <Form.Label className='d-flex col-2 align-items-center m-0'><span>{propiedad}</span></Form.Label>
+                                <Form.Control className='col' type="text" defaultValue={dateMen[propiedad] ? dateMen[propiedad] : '-'}/>
+                            </Form.Group>
+                        ))}
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Cancelar
+                    </Button>
+                    <Button variant="primary" onClick={handleClose}>
+                        Ingresar
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        )
+    }
 
     return (
-        <Table striped bordered hover>
-            {renderTableHeader()}
-            {renderTableRows()}
-        </Table>
+        <>
+            <Table striped bordered hover>
+                {renderTableHeader()}
+                {renderTableRows()}
+            </Table>
+            {renderModal()}
+        </>
     );
 }
 
