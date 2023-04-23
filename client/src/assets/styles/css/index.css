@@ -12,6 +12,11 @@ body {
   width: 25rem;
 }
 
+.logo {
+  width: 14rem !important;
+  margin: 0 auto;
+}
+
 .bg-control {
   background-color: #222327 !important;
 }
@@ -56,3 +61,8 @@ img {
   box-sizing: border-box;
 }
 
+.h-libroContable {
+  height: 32rem;
+}
+
+/*# sourceMappingURL=index.css.map */

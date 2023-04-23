@@ -24,7 +24,7 @@ function TableRep4(props){
   
   return (
     <>
-      <Table striped bordered hover>
+      <Table striped bordered hover className='mt-4'>
         <thead>
           <tr>
             <th rowSpan={2} className='text-center'>Nombre alumno</th>

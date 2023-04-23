@@ -14,6 +14,16 @@ function BodyReport9() {
         try {
             const response = await fetch(url);
             const lbJSON = await response.json();
+
+            lbJSON.sort((a,b) => {
+                const grados = ['Kinder', 'Preparatoria', 'Primero', 'Segundo', 'Tercero', 'Cuarto', 'Quinto',
+                                'Sexto', 'Septimo', 'Octavo', 'Noveno', 'Decimo', 'Undecimo'];
+                if(grados.indexOf(a.grado) < grados.indexOf(b.grado)) return -1;
+                if(grados.indexOf(a.grado) > grados.indexOf(b.grado)) return 1;
+                if(a.codigo < b.codigo) return -1;
+                if(a.codigo > b.codigo) return 1;
+                return 0;
+            });
             setData(lbJSON)
         } catch (error) {
             console.error(error);

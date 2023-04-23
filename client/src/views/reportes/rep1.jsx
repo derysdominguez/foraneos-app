@@ -26,7 +26,7 @@ function Rep1() {
                                 {/* Hacer a componente body report */}
                                 <HeaderReport title={Title} subtitle={Subtitle} dateReport={fechaEmision}></HeaderReport>
                                 {/* Cuerpo del report */}
-                                <BodyReport1></BodyReport1>
+                                <BodyReport1 ></BodyReport1>
                                 {/* Convertir a componente */}
                                 <BtnInferiores></BtnInferiores>
                             </div>

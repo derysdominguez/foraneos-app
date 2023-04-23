@@ -22,7 +22,7 @@ img {
 }
 
 .bg-color-brand{
-    background-color: $primary-color;
+    background-color: $primary-color!important;
 }
 
 .overflow-y-content{
@@ -40,4 +40,8 @@ img {
 
 .hsizing-control{
     box-sizing: border-box;
+}
+
+.h-libroContable{
+    height: 32rem;
 }
