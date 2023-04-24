@@ -1,6 +1,7 @@
 const {DataTypes} = require("sequelize");
 const sequelize = require("../database/database.js");
 
+
 const Cuenta = sequelize.define("cuenta", {
     codigo : {
         type : DataTypes.STRING,

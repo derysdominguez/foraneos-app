@@ -4,6 +4,7 @@ const sequelize = require("../database/database.js");
 const Cuenta = require("./Cuenta.js");
 const Asiento = require("./Asiento.js");
 
+
 const AsientoDetalle = sequelize.define("asientodetalle", {
     lado : {
         type : DataTypes.STRING(1),
