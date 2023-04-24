@@ -4,8 +4,8 @@ const path = require('path')
 const cors = require('cors')
 const passport = require('passport')
 
-const sequelize = require('./src/database/database')
-const indexRoutes = require('./src/routes/index.routes')
+/* const sequelize = require('./src/database/database')
+ */const indexRoutes = require('./src/routes/index.routes')
 
 const app = express()
 const PORT = process.env.PORT || 4001
