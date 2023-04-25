@@ -19,6 +19,7 @@ import Rep9 from './views/reportes/rep9';
 import Rep3 from './views/reportes/rep3';
 import Usuarios from './views/Usuarios';
 import CancelacionMatricula from './views/CancelacionMatricula';
+import Cuentas from './views/cuentas';
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
         <Route path="/reportes/rep7" element = {<Rep7 />} />
         <Route path="/reportes/rep8" element = {<Rep8 />} />
         <Route path="/reportes/rep9" element = {<Rep9 />} />
+        <Route path="/cuentas" element = {<Cuentas />} />
       </Routes>
     </Router>
   )
