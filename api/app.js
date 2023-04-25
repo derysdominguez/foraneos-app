@@ -1,10 +1,8 @@
 const express = require("express");
 const app = express();
-const asientoRoutes = require("./routes/asientos.routes.js");
-const cuentaRoutes = require("./routes/cuentas.routes.js");
+const indexRoutes = require("./routes/index.routes");
 
 app.use(express.json())
-app.use(asientoRoutes);
-app.use(cuentaRoutes);
+app.use(indexRoutes)
 
 module.exports = app;
