@@ -1,6 +1,6 @@
 import React,{ useState, useEffect } from 'react'
 import BarraLateral from '../components/barraLateral'
-import { Col, Container, ListGroup, Row, Toast } from 'react-bootstrap'
+import { Col, Container, ListGroup, Row, Toast, ToastContainer } from 'react-bootstrap'
 import HeaderTitle from '../components/Reportes/header'
 import LineChart from '../components/Reportes/rep5/graficoLinea'
 
@@ -83,18 +83,19 @@ function Home() {
             </div>
           </Col>
         </Row>
-        <Toast className='toast-container position-fixed bottom-0 mb-2 end-0 p-3' show={showMsg} onClose={toggleShowMsg}>
-          <Toast.Header>
-            <img
-              src="holder.js/20x20?text=%20"
-              className="rounded me-2"
-              alt=""
-            />
-            <strong className="me-auto">Bootstrap</strong>
-            <small>11 mins ago</small>
-          </Toast.Header>
-          <Toast.Body>Woohoo, you're reading this text in a Toast!</Toast.Body>
-        </Toast>
+        <ToastContainer
+          className="p-3"
+          position={'bottom-end'}
+          style={{ zIndex: 1 }}
+        >
+          <Toast show={showMsg} onClose={toggleShowMsg}>
+            <Toast.Header closeButton={true} >
+              <strong className="me-auto">Bienvenido</strong>
+              <small>11 mins ago</small>
+            </Toast.Header>
+            <Toast.Body>Ya puedes empezar a usar SJBS Contable </Toast.Body>
+          </Toast>
+        </ToastContainer>
       </Container>
     </>
   )
