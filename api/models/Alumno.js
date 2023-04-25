@@ -9,8 +9,11 @@ const Alumno = sequelize.define("alumno", {
         autoIncrement : true
     },
     codigo : {
-        type: DataTypes.INTEGER,
-        allowNull : false
+        type: DataTypes.STRING(11),
+        allowNull : false,
+        validate : {
+            len: [11,11]
+        }
     },
     nombre : {
         type: DataTypes.STRING,
@@ -32,12 +35,12 @@ const Alumno = sequelize.define("alumno", {
 });
 
 Beca.hasMany(Alumno, {
-    foreignKey: "becaId",
+    foreignKey: "becaid",
     sourceKey: "id"
 });
 
 Alumno.belongsTo(Beca, {
-    foreignKey: 'becaId',
+    foreignKey: 'becaid',
     targetId : "id"
 });
 

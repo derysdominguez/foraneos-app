@@ -1,6 +1,7 @@
 const {DataTypes} = require("sequelize");
 const sequelize = require("../database/database.js");
 
+// Corregir que no permita strings vacíos, validar adecuadamente el código de cuenta.
 
 const Cuenta = sequelize.define("cuenta", {
     codigo : {
