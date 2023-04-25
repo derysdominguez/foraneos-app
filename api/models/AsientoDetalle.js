@@ -19,28 +19,46 @@ const AsientoDetalle = sequelize.define("asientodetalle", {
         validate : {
             min : 0.01
         }
+    },
+    asientoid : {
+        type : DataTypes.STRING(10),
+        primaryKey : true,
+        references : {
+            model : Asiento,
+            key : "codigo"
+        }
+    },
+
+    cuentaid : {
+        type: DataTypes.STRING,
+        primaryKey : true,
+        references : {
+            model : Cuenta,
+            key : "codigo"
+        }
     }
 }, {
-    timestamps : false
+    timestamps : false,
 });
 
 Asiento.hasMany(AsientoDetalle, {
-    foreignKey : "asientoId",
+    foreignKey : "asientoid",
     sourceKey : "codigo"
 });
 
 AsientoDetalle.belongsTo(Asiento, {
-    foreignKey : "asientoId",
+    foreignKey : "asientoid",
     targetId :  "codigo"
 });
 
 Cuenta.hasMany(AsientoDetalle, {
-    foreignKey : "cuentaId",
+    foreignKey : "cuentaid",
     sourceKey : "codigo"
 });
 
 AsientoDetalle.belongsTo(Cuenta, {
-    foreignKey : "cuentaId",
+    as : "cuenta",
+    foreignKey : "cuentaid",
     targetId : "codigo"
 });
 
