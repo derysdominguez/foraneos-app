@@ -13,7 +13,7 @@ const port = process.env.DB_PORT;
 async function main() {
     try {
         console.log(sequelize.models);
-        await sequelize.sync({force:true});
+        await sequelize.sync({alter:true});
         console.log("Conexión exitosa");
         app.listen(port);
         console.log("Server is listening on port", port)
