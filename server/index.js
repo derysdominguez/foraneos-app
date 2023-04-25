@@ -11,6 +11,7 @@ const PORT = process.env.PORT || 4001
 
 // configs
 require('./src/config/passport')
+const sequelize = require('./src/database/database')
 
 // middlewares
 app.use(morgan('dev'))
@@ -26,6 +27,10 @@ app.use('/api', indexRoutes)
 app.use(express.static(path.join(__dirname, 'public')))
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'))
+})
+
+sequelize.sync({ force: false }).then(() => {
+  console.log('Database is connected')
 })
 
 app.listen(PORT, () => {

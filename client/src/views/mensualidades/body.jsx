@@ -5,6 +5,7 @@ import GradoSelect from '../../components/GradoSelect';
 const Body = () => {
 
     const url = 'https://apimocha.com/foraneos-app/rep4'
+    const url2 = 'http://localhost:4001/mensualidad'
 
     const [data, setData] = useState();
     const [datosGrado, setDatosGrado] = useState();
