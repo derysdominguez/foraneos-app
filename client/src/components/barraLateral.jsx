@@ -33,15 +33,15 @@ function BarraLateral() {
                 </Nav.Link>
             </Nav.Item>
             <Nav.Item as="li" className="mb-3 ms-2 b-sizing">
-                <Nav.Link href="/usuarios" eventKey="link-2" className="text-white fs-6 d-flex align-items-center">
-                    <BsFillPeopleFill className="me-3"/>
-                    Usuario
-                </Nav.Link>
-            </Nav.Item>
-            <Nav.Item as="li" className="mb-3 ms-2 b-sizing">
                 <Nav.Link href="/mensualidad" eventKey="link-2" className="text-white fs-6 d-flex align-items-center">
                     <BsFillCalendarCheckFill className="me-3"/>
                     Mensualidades
+                </Nav.Link>
+            </Nav.Item>
+            <Nav.Item as="li" className="mb-3 ms-2 b-sizing">
+                <Nav.Link href="/cuentas" eventKey="link-2" className="text-white fs-6 d-flex align-items-center">
+                    <BsFillCalendarCheckFill className="me-3"/>
+                    Cuentas contables
                 </Nav.Link>
             </Nav.Item>
             <Nav.Item as="li" className="mb-3 ms-2 b-sizing">

@@ -30,6 +30,9 @@ const Body = () => {
         if (event.target.name === "cuenta") {
             setValor(buscar(event.target.value));
         }
+        if(event.target.name === "buscar"){
+            setValor(event.target.value)
+        }
     }
     
     const handleChange2 = (event) => {
@@ -69,7 +72,7 @@ const Body = () => {
         icon: 'success',
         title: 'Asiento Agregado',
         text: 'Revisa la tabla para mas detalles.',
-        }).then(handleClose);
+        }).then(handeSuccess);
     }
 
     const handleSubmit2 = (event) => {
@@ -90,7 +93,7 @@ const Body = () => {
         }
     }
 
-    const handleClose = () => {
+    const handeSuccess = () =>{
         setAllAsientos([])
         setAsientos({
             cuenta: '', 
@@ -105,6 +108,41 @@ const Body = () => {
         setShowSuccess(false)
         setShowDanger(false)
         setShowModal(false)
+    }
+
+    const handleClose = () => {
+        Swal.fire({
+            title: 'Seguro que desea cancelar la operación?',
+            text: "Se descartaran los datos ingresados actualmente del formulario!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Abandonar', 
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                setAllAsientos([])
+                setAsientos({
+                    cuenta: '', 
+                    naturaleza: 'Deudor', 
+                    monto: ''
+                })
+                setValor('')
+                setInfoData({
+                    descripcion : '', 
+                    fecha : '2023-04-23'
+                })
+                setShowSuccess(false)
+                setShowDanger(false)
+                setShowModal(false)
+                Swal.fire(
+                    'Operación cancelada!',
+                    'Puede volver a sus actividades normales.',
+                    'error'
+                )
+            }
+        })
     }
 
     const handleDelete = (index) => {
@@ -126,7 +164,6 @@ const Body = () => {
         try {
             const [response, response2] = await Promise.all([fetch(url), fetch(url2)])
             const [lbJSON, lbJSON2] = await Promise.all([response.json(), response2.json()])
-            
             const newLBSON = lbJSON.map(({ codigo, nombre }) => ({ codigo, nombre }));
             
             setData(newLBSON)
@@ -143,7 +180,7 @@ const Body = () => {
 
     useEffect(()=> {
         api()
-    },[])
+    }, [])
 
     
     const filtrar = data ? data.filter((element) =>
@@ -184,7 +221,7 @@ const Body = () => {
                             <Form.Group className='mb-3'>
                                 <Form.Label>Cuenta</Form.Label>
                                 <div className='d-flex p-0 gap-3'>
-                                    <Form.Control name='cuenta' value={valor} onChange={handleChange} type='text' placeholder='Buscar...'></Form.Control>
+                                    <Form.Control name='buscar' onChange={handleChange} type='text' placeholder='Buscar...'></Form.Control>
                                     <Form.Select name='cuenta' value={asientos.cuenta} onChange={handleChange}>
                                         {filtrar ? filtrar.map((element, index) => (
                                             <option key={index} value={element.codigo}>{element.nombre}</option>
@@ -214,15 +251,17 @@ const Body = () => {
                                     Movimiento creado. 
                                 </p>
                             </Alert>          
+                            <Form.Group className='mb-2 d-flex'>
+                                <Button className='col' variant="secondary" type="button" onClick={handleSubmit2}>
+                                    Agregar partida (Debe / Haber)
+                                </Button>
+                            </Form.Group>
                             <Form.Group className='mb-3 d-flex gap-2'>
-                                <Button className='col' variant="secondary" type="button" onClick={handleClose}>
+                                <Button className='col' variant="danger" type="button" onClick={handleClose}>
                                     Cancelar
                                 </Button>
-                                <Button className='col' variant="secondary" type="button" onClick={handleSubmit2}>
-                                    Movimiento
-                                </Button>
                                 <Button className='col' variant="success" type="submit" onClick={handleSubmit}>
-                                    Añadir
+                                    Finalizar 
                                 </Button>
                             </Form.Group>
                         </Form>
