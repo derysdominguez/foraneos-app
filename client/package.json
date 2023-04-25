@@ -10,14 +10,17 @@
     "sass": "sass --watch src/assets/styles/scss/index.scss  src/assets/styles/css/index.css"
   },
   "dependencies": {
+    "@react-pdf/renderer": "3.1.9",
     "bootstrap": "^5.2.3",
     "chart.js": "^4.2.1",
+    "file-saver": "^2.0.5",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
     "react-router-dom": "^6.9.0",
+    "react-to-pdf": "^0.0.14",
     "sass": "^1.59.3",
     "sweetalert2": "^11.7.3"
   },
