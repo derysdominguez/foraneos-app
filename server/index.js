@@ -4,14 +4,14 @@ const path = require('path')
 const cors = require('cors')
 const passport = require('passport')
 
-/* const sequelize = require('./src/database/database')
- */const indexRoutes = require('./src/routes/index.routes')
+const indexRoutes = require('./src/routes/index.routes')
 
 const app = express()
 const PORT = process.env.PORT || 4001
 
 // configs
 require('./src/config/passport')
+const sequelize = require('./src/database/database')
 
 // middlewares
 app.use(morgan('dev'))
@@ -27,6 +27,10 @@ app.use('/api', indexRoutes)
 app.use(express.static(path.join(__dirname, 'public')))
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'))
+})
+
+sequelize.sync({ force: false }).then(() => {
+  console.log('Database is connected')
 })
 
 app.listen(PORT, () => {

@@ -1,49 +1,31 @@
-const db = require('../database/database')
+const sequelize = require('../database/database')
+const { DataTypes } = require('sequelize')
 
-const createUser = async ({ name, email, password }) => {
-  try {
-    const user = await db.query(
-      'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *',
-      [name, email, password]
-    )
-    return user.rows[0]
-  } catch (error) {
-    console.log(error)
+const User = sequelize.define('user', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+    allowNull: false
+  },
+  username: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  role: {
+    type: DataTypes.STRING,
+    allowNull: false
   }
-}
+})
 
-const getFindUserByEmail = async ({ email }) => {
-  try {
-    const userFound = await db.query('SELECT * FROM users WHERE email = $1', [
-      email
-    ])
-    return userFound.rows[0]
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-const getUserById = async ({ id }) => {
-  try {
-    const userFound = await db.query('SELECT * FROM users WHERE id = $1', [id])
-    return userFound.rows[0]
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-const getAllUsers = async () => {
-  try {
-    const users = await db.query('SELECT * FROM users')
-    return users.rows
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-module.exports = {
-  createUser,
-  getFindUserByEmail,
-  getUserById,
-  getAllUsers
-}
+module.exports = User

@@ -1,39 +1,76 @@
-import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
-import BarraLateral from "../../components/barraLateral";
-import HeaderTitle from "../../components/Reportes/header";
-import HeaderReport from "../../components/Reportes/headerReport";
-import BodyReport4 from "../../components/Reportes/rep4/bodyReport4";
-import BtnInferiores from "./imprimir";
-
+import React from 'react'
+import { Container, Row, Col } from 'react-bootstrap'
+import BarraLateral from '../../components/barraLateral'
+import HeaderTitle from '../../components/Reportes/header'
+import HeaderReport from '../../components/Reportes/headerReport'
+import BodyReport4 from '../../components/Reportes/rep4/bodyReport4'
+import BtnInferiores from './imprimir'
+import Pdf from 'react-to-pdf'
+const ref = React.createRef()
 function Rep4() {
-    const Title = 'Reporte de mensualidades'
-    const Subtitle = 'Primer grado'
-    const fechaEmision = '25/3/2023'
-    return(
-        <>
-            <Container fluid>
-                <Row>
-                    <Col className="bg-control min-vh-100 min-vh d-flex rounded-end-nav " xs md={3} lg={3} xl={2}>
-                        <BarraLateral></BarraLateral>
-                    </Col>
-                    <Col className="min-vh-100 min-vh d-flex px-5 py-4" xs md={9} lg={9} xl={10} >
-                        <div className='d-flex flex-column w-100 align-items-center gap-4'>
-                            <HeaderTitle></HeaderTitle>
-                            <div className='bodyText bg-white w-100 h-control p-4 rounded d-flex align-items-center d-flex gap-2 flex-wrap justify-content-evenly'>
-                                {/* Hacer a componente body report */}
-                                <HeaderReport title={Title} subtitle={Subtitle} dateReport={fechaEmision}></HeaderReport>
-                                {/* Cuerpo del report */}
-                                <BodyReport4></BodyReport4>
-                                {/* Botones inferiores */}
-                                <BtnInferiores></BtnInferiores>
-                            </div>
-                        </div>
-                    </Col>
-                </Row>
-            </Container>
-        </>
-    )
+  const Title = 'Reporte de mensualidades'
+  const Subtitle = 'Primer grado'
+  const fechaEmision = '25/3/2023'
+  const options = {
+    orientation: 'landscape',
+    unit: 'in',
+    format: [13, 8],
+  }
+  return (
+    <>
+      <Container fluid>
+        <Row>
+          <Col
+            className='bg-control min-vh-100 min-vh d-flex rounded-end-nav '
+            xs
+            md={3}
+            lg={3}
+            xl={2}>
+            <BarraLateral></BarraLateral>
+          </Col>
+          <Col
+            className='min-vh-100 min-vh d-flex px-5 py-4'
+            xs
+            md={9}
+            lg={9}
+            xl={10}>
+            <div className='d-flex flex-column w-100 align-items-center gap-4'>
+              <HeaderTitle></HeaderTitle>
+              <div className='bodyText bg-white w-100 h-control p-4 rounded d-flex align-items-center d-flex gap-2 flex-wrap justify-content-evenly'>
+                {/* Hacer a componente body report */}
+                <div className='w-100' ref={ref}>
+                  <HeaderReport
+                    title={Title}
+                    subtitle={Subtitle}
+                    dateReport={fechaEmision}></HeaderReport>
+                  {/* Cuerpo del report */}
+                  <BodyReport4></BodyReport4>
+                </div>
+                {/* Botones inferiores */}
+                <BtnInferiores>
+                  <Pdf
+                    targetRef={ref}
+                    filename='reporte_mensualidades.pdf'
+                    options={options}
+                    x={0.5}
+                    y={0.5}
+                    scale={0.8}>
+                    {({ toPdf }) => (
+                      <button
+                        onClick={toPdf}
+                        className='btn btn-primary px-3 d-flex align-items-center me-1'>
+                        <span>Imprimir</span>
+                      </button>
+                    )} 
+                  </Pdf>
+                </BtnInferiores>
+              </div>
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    </>
+  )
 }
 
-export default Rep4;
+export default Rep4

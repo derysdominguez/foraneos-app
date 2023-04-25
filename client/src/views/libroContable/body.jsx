@@ -9,7 +9,7 @@ const Body = () => {
     const [allAsientos, setAllAsientos] = useState([])
     const [showSuccess, setShowSuccess] = useState(false);
     const [showDanger, setShowDanger] = useState(false);
-
+    
     const [infoAsiento, setInfoData] = useState({
         descripcion : '', 
         fecha : '2023-04-23'
@@ -28,7 +28,7 @@ const Body = () => {
             [name]: value
         });
         if (event.target.name === "cuenta") {
-            setValor(event.target.value);
+            setValor(buscar(event.target.value));
         }
     }
     
@@ -116,8 +116,8 @@ const Body = () => {
     const handleShow = () => setShowModal(true);
     
 
-    const url = 'https://apimocha.com/dsaasdasdasdasdasdsad/cuentas'
-    const url2 = 'https://apimocha.com/foraneos-app/rep1'
+    const url = 'http://localhost:4000/cuentas'
+    const url2 = 'http://localhost:4000/cuentas'
     const [data, setData] = useState()
     const [data2, setData2] = useState()
 
@@ -126,17 +126,24 @@ const Body = () => {
         try {
             const [response, response2] = await Promise.all([fetch(url), fetch(url2)])
             const [lbJSON, lbJSON2] = await Promise.all([response.json(), response2.json()])
-            setData(lbJSON)
+            
+            const newLBSON = lbJSON.map(({ codigo, nombre }) => ({ codigo, nombre }));
+            
+            setData(newLBSON)
             setData2(lbJSON2)
         } catch (error) {
             console.error(error)
         }
     }
     
+    const buscar = (index) =>{
+        const element = data.find(item => item.codigo === index)
+        return element ? element.nombre : ''
+    }
 
     useEffect(()=> {
-        
-    })
+        api()
+    },[])
 
     
     const filtrar = data ? data.filter((element) =>
@@ -179,8 +186,8 @@ const Body = () => {
                                 <div className='d-flex p-0 gap-3'>
                                     <Form.Control name='cuenta' value={valor} onChange={handleChange} type='text' placeholder='Buscar...'></Form.Control>
                                     <Form.Select name='cuenta' value={asientos.cuenta} onChange={handleChange}>
-                                        {filtrar ? filtrar.map((element) => (
-                                            <option key={element.cuenta} value={element.nombre}>{element.nombre}</option>
+                                        {filtrar ? filtrar.map((element, index) => (
+                                            <option key={index} value={element.codigo}>{element.nombre}</option>
                                         )) : <option disabled>Cargando...</option>}
                                     </Form.Select>
                                 </div>
@@ -224,7 +231,7 @@ const Body = () => {
                         <ListGroup className='col mb-3'>
                             <ListGroup.Item>Deudor</ListGroup.Item>
                             {allAsientos.filter(asiento => asiento.naturaleza === 'Deudor').map((asiento, index) => (
-                                <ListGroup.Item key={index}  className="d-flex justify-content-between align-items-center">{asiento.cuenta} - {asiento.monto}
+                                <ListGroup.Item key={index}  className="d-flex justify-content-between align-items-center">{buscar(asiento.cuenta)} - {asiento.monto}
                                     <Button variant="danger" onClick={() => handleDelete(index)}>X</Button> 
                                 </ListGroup.Item>
                             ))}
@@ -232,7 +239,7 @@ const Body = () => {
                         <ListGroup className='col'>
                             <ListGroup.Item>acreedor</ListGroup.Item>
                             {allAsientos.filter(asiento => asiento.naturaleza === 'Acreedor').map((asiento, index) => (
-                                <ListGroup.Item key={index} className="d-flex justify-content-between align-items-center">{asiento.cuenta} - {asiento.monto}
+                                <ListGroup.Item key={index} className="d-flex justify-content-between align-items-center">{buscar(asiento.cuenta)} - {asiento.monto}
                                     <Button variant="danger" onClick={() => handleDelete(index)}>X</Button> 
                                 </ListGroup.Item>
                             ))}

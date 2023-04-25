@@ -6,9 +6,10 @@ const User = require('../models/User')
 
 require('dotenv').config()
 
-const opts = {}
-opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken()
-opts.secretOrKey = process.env.JWT_SECRET_KEY
+const opts = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: process.env.JWT_SECRET_KEY
+}
 
 passport.use(
   'jwt',
@@ -16,9 +17,9 @@ passport.use(
     try {
       const user = await User.getUserById({ id: payload.id })
       if (user) {
-        done(null, user)
+        return done(null, user)
       }
-      done(null, false)
+      return done(null, false)
     } catch (error) {
       console.log(error)
     }
