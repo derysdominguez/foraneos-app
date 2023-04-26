@@ -1,7 +1,7 @@
 const {DataTypes} = require("sequelize");
 const sequelize = require("../database/database.js");
 const Beca = require("./Beca.js");
-
+// Validar que codigo coincida con el formato.
 const Alumno = sequelize.define("alumno", {
     id : {
         type: DataTypes.INTEGER,
@@ -25,13 +25,27 @@ const Alumno = sequelize.define("alumno", {
         max: 13,
         allowNull : false
     },
+    becaid : {
+        type : DataTypes.INTEGER,
+        allowNull : false,
+        references : {
+            model : Beca,
+            key : "id"
+        }
+    },
     activo : {
         type: DataTypes.BOOLEAN,
         defaultValue : true,
         allowNull : false
+    },
+    pago_perfecto : {
+        type : DataTypes.BOOLEAN,
+        defaultValue : true,
+        alowNull : false
     }
 }, {
-    timestamps: false
+    timestamps: false,
+    tableName : "alumno"
 });
 
 Beca.hasMany(Alumno, {

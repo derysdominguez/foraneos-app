@@ -59,6 +59,7 @@ const Asiento = sequelize.define(
   },
   {
     timestamps: false,
+    tableName : "asiento"
   }
 );
 

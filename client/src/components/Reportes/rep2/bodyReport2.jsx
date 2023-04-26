@@ -13,7 +13,7 @@ const convertDateFormat = dateString => {
 
 function BodyReport2() {
     /* Es ejemplo, mandas el arreglo de objetos   */
-    const url = 'https://apimocha.com/foraneos-app/rep2'
+    const url = 'http://localhost:4000/deudas'
     const [data, setData] = useState()
 
     const api = async () => {
@@ -22,12 +22,12 @@ function BodyReport2() {
             const lbJSON = await response.json();
 
             lbJSON.sort((a,b) => {
-                const fecha1 = convertDateFormat(a.fecha_final);
-                const fecha2 = convertDateFormat(b.fecha_final);
+                const fecha1 = convertDateFormat(a.fecha_finalizacion);
+                const fecha2 = convertDateFormat(b.fecha_finalizacion);
                 if (fecha1 < fecha2) return -1;
                 if (fecha1 > fecha2) return 1;
                 return 0;
-            })
+            }) 
 
             setData(lbJSON)
         } catch (error) {

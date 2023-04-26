@@ -4,14 +4,21 @@ const router = Router();
 const {
   createMensualidadAlumno,
   getMensualidadesAlumno,
-  updateMensualidad,
-  deleteMensualidad,
+  getReporteMensualidadesPorGrado,
+  getReporteMorosos,
+  getReporteAlumnosConPagoPerfecto,
+  updateTodasMensualidades,
+  // deleteMensualidad,
 } = require("../controllers/mensualidad.controller.js");
 
+router.get('/reporte/morosos', getReporteMorosos);
+router.get('/reporte/pagoperfecto', getReporteAlumnosConPagoPerfecto);
+router.get('/reporte/mensualidades/:grado', getReporteMensualidadesPorGrado);
+router.get('/:id', getMensualidadesAlumno);
+router.post('/:id', createMensualidadAlumno);
+router.put('/:id', updateTodasMensualidades);
 
-router.get('/mensualidades/:id', getMensualidadesAlumno);
-router.post('/mensualidades/:id', createMensualidadAlumno);
-router.put('/mensualidades', updateMensualidad);
-router.delete('/mensualidades', deleteMensualidad);
+// router.put('/:id/mes/:mes', updateMensualidad);
+// router.delete('/:id/mes/:mes', deleteMensualidad);
 
 module.exports = router;

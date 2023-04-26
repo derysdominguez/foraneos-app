@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Modal, Form, ListGroup, Alert } from 'react-bootstrap';
 import { BiBookAdd } from "react-icons/bi";
 import Swal from 'sweetalert2'
+import TableGenerator from './table';
 
 const Body = () => {
     const [showModal, setShowModal] = useState(false);
@@ -9,6 +10,7 @@ const Body = () => {
     const [allAsientos, setAllAsientos] = useState([])
     const [showSuccess, setShowSuccess] = useState(false);
     const [showDanger, setShowDanger] = useState(false);
+    const [showDanger2, setShowDanger2] = useState(false);
     
     const [infoAsiento, setInfoData] = useState({
         descripcion : '', 
@@ -21,6 +23,10 @@ const Body = () => {
         monto: ''
     })
 
+    /**
+     * ? Obtencion de datos
+     */
+
     const handleChange = (event) => {
         const { name, value } = event.target;
         setAsientos({
@@ -30,9 +36,9 @@ const Body = () => {
         if (event.target.name === "cuenta") {
             setValor(buscar(event.target.value));
         }
-        if(event.target.name === "buscar"){
+        /* if(event.target.name === "buscar"){
             setValor(event.target.value)
-        }
+        } */
     }
     
     const handleChange2 = (event) => {
@@ -43,7 +49,10 @@ const Body = () => {
         });
     }
 
-    const handleSubmit = (event) => {
+    /**
+     * ? Validaciones / Creacion de asiento contable con detalles
+     */
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const { fecha, descripcion } = infoAsiento
 
@@ -68,6 +77,46 @@ const Body = () => {
             });
         }
 
+        /**
+         * ? Se ejecuta solo si no hay mensajes de error (errorMsg)
+         * Primero se asigna los valores a enviarAsientos
+         */
+
+        const asientosDetallesConvertidos = allAsientos.map(asiento => {
+            const lado = asiento.naturaleza === 'Deudor' ? 'd' : 'h';
+            return {
+                lado: lado,
+                monto: asiento.monto,
+                cuentaid: asiento.cuenta,
+            };
+        });
+
+        const enviarCompletos = {
+            'fecha_asiento' : fecha, 
+            'descripcion' : descripcion, 
+            'asientodetalles' : asientosDetallesConvertidos
+        }
+        
+        try {
+            const response = await fetch('http://localhost:4000/asientos/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(enviarCompletos),
+            });
+            const dataCenter = await response.json();
+            if (dataCenter.message) {
+                return Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'La fecha debe estar en el rango del mes actual hasta el momento, sin dias futuros',
+                });
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
         Swal.fire({
         icon: 'success',
         title: 'Asiento Agregado',
@@ -77,19 +126,31 @@ const Body = () => {
 
     const handleSubmit2 = (event) => {
         event.preventDefault();
-        if(asientos.cuenta && asientos.monto && asientos.naturaleza){
-            setAllAsientos(prevAsientos => [...prevAsientos, asientos])
-            setValor('')
-            setAsientos({
-                cuenta: '', 
-                naturaleza: 'Deudor', 
-                monto: ''
-            })
-            setShowDanger(false)
-            setShowSuccess(true)
+
+        const existeValor = allAsientos.some(element => element.cuenta === asientos.cuenta);
+
+        if(existeValor==false){
+            console.log(existeValor)
+            if(asientos.cuenta && asientos.monto && asientos.naturaleza && !existeValor){
+                setAllAsientos(prevAsientos => [...prevAsientos, asientos])
+                setValor('')
+                setAsientos({
+                    cuenta: '', 
+                    naturaleza: 'Deudor', 
+                    monto: ''
+                })
+                setShowSuccess(true)
+                setShowDanger(false)
+                setShowDanger2(false)
+            }else{
+                setShowSuccess(false)
+                setShowDanger(true)
+                setShowDanger2(false)
+            }
         }else{
             setShowSuccess(false)
-            setShowDanger(true)
+            setShowDanger(false)
+            setShowDanger2(true)
         }
     }
 
@@ -155,7 +216,7 @@ const Body = () => {
     
 
     const url = 'http://localhost:4000/cuentas'
-    const url2 = 'http://localhost:4000/cuentas'
+    const url2 = 'http://localhost:4000/asientos/'
     const [data, setData] = useState()
     const [data2, setData2] = useState()
 
@@ -165,9 +226,9 @@ const Body = () => {
             const [response, response2] = await Promise.all([fetch(url), fetch(url2)])
             const [lbJSON, lbJSON2] = await Promise.all([response.json(), response2.json()])
             const newLBSON = lbJSON.map(({ codigo, nombre }) => ({ codigo, nombre }));
-            
+            const newLBSON2 = lbJSON2.map(({ codigo, fecha_registrado, descripcion }) => ({ codigo, fecha_registrado, descripcion }));
             setData(newLBSON)
-            setData2(lbJSON2)
+            setData2(newLBSON2)
         } catch (error) {
             console.error(error)
         }
@@ -180,7 +241,7 @@ const Body = () => {
 
     useEffect(()=> {
         api()
-    }, [])
+    }, [data2])
 
     
     const filtrar = data ? data.filter((element) =>
@@ -201,6 +262,7 @@ const Body = () => {
             <div className='w-100 overflow-auto p-0 d-flex rounded align-items-center justify-content-center'>
                 <div className='col-12 mt-1 w-100 h-libroContable'>
                     {/* Cuerpo del libro contable */}
+                    <TableGenerator data={data2 ? data2 : [{}]}></TableGenerator>
                 </div>
             </div>
             <Modal show={showModal} onHide={handleClose} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
@@ -221,9 +283,10 @@ const Body = () => {
                             <Form.Group className='mb-3'>
                                 <Form.Label>Cuenta</Form.Label>
                                 <div className='d-flex p-0 gap-3'>
-                                    <Form.Control name='buscar' onChange={handleChange} type='text' placeholder='Buscar...'></Form.Control>
+                                    {/* <Form.Control name='buscar' value={valor} onChange={handleChange} type='text' placeholder='Buscar...'></Form.Control> */}
                                     <Form.Select name='cuenta' value={asientos.cuenta} onChange={handleChange}>
-                                        {filtrar ? filtrar.map((element, index) => (
+                                        <option disabled value={''}>Seleccion una cuenta</option>
+                                        {data ? data.map((element, index) => (
                                             <option key={index} value={element.codigo}>{element.nombre}</option>
                                         )) : <option disabled>Cargando...</option>}
                                     </Form.Select>
@@ -250,6 +313,11 @@ const Body = () => {
                                 <p className='m-0'>
                                     Movimiento creado. 
                                 </p>
+                            </Alert>
+                            <Alert show={showDanger2} variant="danger" className='d-flex align-items-center'>
+                                <p className='m-0'>
+                                    Las cuentas solo pueden estar en un lado (debe / haber)
+                                </p>
                             </Alert>          
                             <Form.Group className='mb-2 d-flex'>
                                 <Button className='col' variant="secondary" type="button" onClick={handleSubmit2}>
@@ -271,7 +339,7 @@ const Body = () => {
                             <ListGroup.Item>Deudor</ListGroup.Item>
                             {allAsientos.filter(asiento => asiento.naturaleza === 'Deudor').map((asiento, index) => (
                                 <ListGroup.Item key={index}  className="d-flex justify-content-between align-items-center">{buscar(asiento.cuenta)} - {asiento.monto}
-                                    <Button variant="danger" onClick={() => handleDelete(index)}>X</Button> 
+                                    <Button variant="danger" onClick={() => handleDelete(allAsientos.indexOf(asiento))}>X</Button> 
                                 </ListGroup.Item>
                             ))}
                         </ListGroup>
@@ -279,7 +347,7 @@ const Body = () => {
                             <ListGroup.Item>acreedor</ListGroup.Item>
                             {allAsientos.filter(asiento => asiento.naturaleza === 'Acreedor').map((asiento, index) => (
                                 <ListGroup.Item key={index} className="d-flex justify-content-between align-items-center">{buscar(asiento.cuenta)} - {asiento.monto}
-                                    <Button variant="danger" onClick={() => handleDelete(index)}>X</Button> 
+                                    <Button variant="danger" onClick={() => handleDelete(allAsientos.indexOf(asiento))}>X</Button> 
                                 </ListGroup.Item>
                             ))}
                         </ListGroup>

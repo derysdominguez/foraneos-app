@@ -14,8 +14,10 @@ const AsientoDetalle = sequelize.define("asientodetalle", {
         }
     },
     monto : {
-        type : DataTypes.DECIMAL(11,2),
+        type : DataTypes.DOUBLE,
         allowNull : false,
+        precision : 11,
+        scale : 2,
         validate : {
             min : 0.01
         }
@@ -39,6 +41,7 @@ const AsientoDetalle = sequelize.define("asientodetalle", {
     }
 }, {
     timestamps : false,
+    tableName : "asientodetalle"
 });
 
 Asiento.hasMany(AsientoDetalle, {
