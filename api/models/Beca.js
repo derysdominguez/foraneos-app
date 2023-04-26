@@ -5,7 +5,8 @@ const sequelize = require("../database/database.js");
 const Beca = sequelize.define("beca", {
     id : {
         type: DataTypes.INTEGER,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement : true
     },
     tipo : {
         type: DataTypes.STRING(30),
