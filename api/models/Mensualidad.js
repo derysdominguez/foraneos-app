@@ -3,6 +3,19 @@ const sequelize = require("../database/database.js");
 const moment = require("moment");
 const Alumno = require("./Alumno.js");
 
+const mesesOrden = [
+    "septiembre",
+    "octubre",
+    "noviembre",
+    "diciembre",
+    "enero",
+    "febrero",
+    "marzo",
+    "abril",
+    "mayo",
+    "junio",
+  ];
+
 const Mensualidad = sequelize.define("mensualidad", {
     alumnoid : {
         type : DataTypes.INTEGER,
@@ -31,7 +44,16 @@ const Mensualidad = sequelize.define("mensualidad", {
             },
             isBefore : moment().add(1, 'day').format('YYYY-MM-DD')
         }
+    },
+    orden : {
+        type : DataTypes.VIRTUAL,
+        get(){
+            return mesesOrden.indexOf(this.mes);
+        }
     }
+}, {
+    timestamps : false,
+    tableName : "mensualidad"
 });
 
 Alumno.hasMany(Mensualidad, {

@@ -33,29 +33,17 @@ const Deuda = sequelize.define(
     fecha_finalizacion: {
       type: DataTypes.DATEONLY,
       allowNull: false,
-      validate: {
-        customValidator(value) {
-          if (value < this.fecha_adquirida) {
-            throw new Error(
-              'La fecha de finalizacion no puede ser menor a la fecha de adquisicion'
-            )
-          }
-        }
-      }
     },
     tasa: {
       type: DataTypes.DOUBLE,
       allowNull: false,
       precision: 11,
       scale: 2,
-      validate: {
-        min: 0,
-        max: 100
-      }
     }
   },
   {
-    timestamps: false
+    timestamps: false,
+    tableName : "deuda"
   }
 )
 

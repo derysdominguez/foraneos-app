@@ -17,7 +17,8 @@ const Beca = sequelize.define("beca", {
         allowNull : false
     }
 }, {
-    timestamps : false
+    timestamps : false,
+    tableName : "beca"
 });
 
 module.exports = Beca;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Alert, Button, Modal, Form } from 'react-bootstrap';
-import { BiBookAdd } from "react-icons/bi";
+import { BiBookAdd, BiEraser } from "react-icons/bi";
 import Swal from 'sweetalert2'
 import TableGenerator from './tableBtns';
 
@@ -91,7 +91,7 @@ const Body = () => {
                             },
                             body: JSON.stringify(valorCuenta),
                         });
-                        const data = await response.json();
+                        const dataCenter = await response.json();
                     } catch (error) {
                         errorMsg = 'Dato ya existe';
                     }
@@ -101,7 +101,6 @@ const Body = () => {
             }else{
                 errorMsg = `El codigo no es de la clasificacion ${clasificacion}`
             }
-            
         }
     
         if (errorMsg) {
@@ -130,7 +129,7 @@ const Body = () => {
 
     useEffect(()=> {
         getCuentas()
-    }, [])
+    }, [allCuentas])
 
     return (
         <div className='bodyText bg-white w-100 p-4 rounded d-flex align-items-start d-flex gap-2 flex-wrap justify-content-evenly'>
