@@ -106,7 +106,13 @@ const Body = () => {
                 body: JSON.stringify(enviarCompletos),
             });
             const dataCenter = await response.json();
-            console.log(dataCenter.message)
+            if (dataCenter.message) {
+                return Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'La fecha debe estar en el rango del mes actual hasta el momento, sin dias futuros',
+                });
+            }
         } catch (error) {
             console.log(error)
         }

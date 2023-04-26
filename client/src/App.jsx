@@ -21,7 +21,7 @@ import Usuarios from './views/Usuarios';
 import CancelacionMatricula from './views/CancelacionMatricula';
 import Cuentas from './views/cuentas';
 import { Alumnos } from './views/Alumnos';
-
+import Deudas from './views/deudas'
 
 function App() {
   
@@ -50,6 +50,7 @@ function App() {
         <Route path="/reportes/rep8" element = {<Rep8 />} />
         <Route path="/reportes/rep9" element = {<Rep9 />} />
         <Route path="/cuentas" element = {<Cuentas />} />
+        <Route path="/deudas" element = {<Deudas />} />
       </Routes>
     </Router>
   )
