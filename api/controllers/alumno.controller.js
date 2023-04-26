@@ -26,7 +26,7 @@ async function getAlumnos(req, res) {
 }
 
 async function createAlumno(req, res) {
-    const {codigo, nombre, grado, becaId} = req.body;
+    const {codigo, nombre, grado, becaid} = req.body;
     try {
         const alumnoFound = await Alumno.findOne({ where: { codigo: codigo } });
         if (alumnoFound) {
@@ -36,7 +36,7 @@ async function createAlumno(req, res) {
             codigo,
             nombre,
             grado,
-            becaid: becaId
+            becaid
         });
 
         ordenDeMensualiadades.forEach(async (mes) => {

@@ -25,6 +25,14 @@ const Alumno = sequelize.define("alumno", {
         max: 13,
         allowNull : false
     },
+    becaid : {
+        type : DataTypes.INTEGER,
+        allowNull : false,
+        references : {
+            model : Beca,
+            key : "id"
+        }
+    },
     activo : {
         type: DataTypes.BOOLEAN,
         defaultValue : true,
