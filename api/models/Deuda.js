@@ -66,7 +66,8 @@ const Deuda = sequelize.define("deuda", {
     } 
     
 }, {
-    timestamps : false
+    timestamps : false,
+    tableName : "deuda"
 });
 
 module.exports = Deuda;

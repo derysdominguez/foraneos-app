@@ -3,7 +3,7 @@ const Deuda = require("../models/Deuda.js");
 module.exports.getDeudas = async (req, res) => {
     try {
         const deudas = await Deuda.findAll({
-            attributes : ['id', 'acreedor', 'cuota', 'monto_total', 'tasa_porcentaje', 'fecha_adquirida', 'fecha_finalizacion']
+            attributes : ['id', 'acreedor', 'cuota', 'monto_total', 'tasa', 'fecha_adquirida', 'fecha_finalizacion']
         });
         res.json(deudas);
     } catch (error) {

@@ -31,7 +31,8 @@ const Alumno = sequelize.define("alumno", {
         allowNull : false
     }
 }, {
-    timestamps: false
+    timestamps: false,
+    tableName : "alumno"
 });
 
 Beca.hasMany(Alumno, {

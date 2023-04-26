@@ -30,7 +30,8 @@ const Cuenta = sequelize.define("cuenta", {
         }
     }
 }, {
-    timestamps : false
+    timestamps : false,
+    tableName : "cuenta"
 });
 
 module.exports = Cuenta;

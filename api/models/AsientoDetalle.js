@@ -41,6 +41,7 @@ const AsientoDetalle = sequelize.define("asientodetalle", {
     }
 }, {
     timestamps : false,
+    tableName : "asientodetalle"
 });
 
 Asiento.hasMany(AsientoDetalle, {
