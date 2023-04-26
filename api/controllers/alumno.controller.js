@@ -20,7 +20,7 @@ async function createAlumno(req, res) {
             codigo,
             nombre,
             grado,
-            becaId
+            becaid: becaId
         })
        res.status(201).json(alumno);
     } catch (error) {

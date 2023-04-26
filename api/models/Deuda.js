@@ -1,34 +1,36 @@
-const {DataTypes} = require("sequelize");
-const sequelize = require("../database/database.js");
-const moment = require("moment");
+const { DataTypes } = require('sequelize')
+const sequelize = require('../database/database.js')
+const moment = require('moment')
 
-const Deuda = sequelize.define("deuda", {
-    id : {
-        type : DataTypes.INTEGER,
-        primaryKey : true,
-        autoIncrement : true
+const Deuda = sequelize.define(
+  'deuda',
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
     },
-    acreedor : {
-        type : DataTypes.STRING,
-        allowNull : false
+    acreedor: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
-    cuota : {
-        type : DataTypes.DOUBLE,
-        allowNull : false,
-        precision : 11,
-        scale : 2,
+    cuota: {
+      type: DataTypes.DOUBLE,
+      allowNull: false,
+      precision: 11,
+      scale: 2
     },
-    monto_total : {
-        type : DataTypes.DOUBLE,
-        allowNull : false,
-        precision : 11,
-        scale : 2,
+    monto_total: {
+      type: DataTypes.DOUBLE,
+      allowNull: false,
+      precision: 11,
+      scale: 2
     },
-    fecha_adquirida : {
-        type : DataTypes.DATEONLY,
-        allowNull : false,
-        defaultValue: moment().format("YYYY-MM-DD"),
+    fecha_adquirida: {
+      type: DataTypes.DATEONLY,
+      allowNull: false
     },
+<<<<<<< HEAD
     fecha_finalizacion : {
         type : DataTypes.DATEONLY,
         allowNull : false,
@@ -61,5 +63,102 @@ const Deuda = sequelize.define("deuda", {
 }, {
     timestamps : false
 });
+=======
+    fecha_finalizacion: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+      validate: {
+        customValidator(value) {
+          if (value < this.fecha_adquirida) {
+            throw new Error(
+              'La fecha de finalizacion no puede ser menor a la fecha de adquisicion'
+            )
+          }
+        }
+      }
+    },
+    tasa: {
+      type: DataTypes.DOUBLE,
+      allowNull: false,
+      precision: 11,
+      scale: 2,
+      validate: {
+        min: 0,
+        max: 100
+      }
+    }
+  },
+  {
+    timestamps: false
+  }
+)
+>>>>>>> 00c3ca8ae960cc48414d711f8fbdd0251a1bfc2c
 
-module.exports = Deuda;
+// const Deuda = sequelize.define("deuda", {
+//     id : {
+//         type : DataTypes.INTEGER,
+//         primaryKey : true,
+//         autoIncrement : true
+//     },
+//     acreedor : {
+//         type : DataTypes.STRING,
+//         allowNull : false
+//     },
+//     cuota : {
+//         type : DataTypes.DOUBLE,
+//         allowNull : false,
+//         precision : 11,
+//         scale : 2,
+//     },
+//     monto_total : {
+//         type : DataTypes.DOUBLE,
+//         allowNull : false,
+//         precision : 11,
+//         scale : 2,
+//     },
+//     fecha_adquirida : {
+//         type : DataTypes.DATEONLY,
+//         allowNull : false,
+//         defaultValue: moment().format("YYYY-MM-DD"),
+//     },
+//     fecha_finalizacion : {
+//         type : DataTypes.DATEONLY,
+//         allowNull : false,
+//         validate : {
+//             isAfter : this.fecha_adquirida
+//         }
+//     },
+//     tasa : {
+//         type : DataTypes.DOUBLE ,
+//         allowNull : false,
+//         precision : 11,
+//         scale : 2,
+//         validate : {
+//             min : 0,
+//             max : 1
+//         }
+//     },
+//     tasa_porcentaje : {
+//         type : DataTypes.VIRTUAL,
+//         get() {
+//             return `${this.tasa * 100}%`
+//         },
+//         set() {
+//             throw new Error("El campo tasa_porcentaje es un virtual, no se establece así.")
+//         }
+//     },
+//     activa : {
+//         type : DataTypes.VIRTUAL,
+//         get() {
+//             return moment().format("YYYY-MM-DD") >= this.fecha_finalizacion;
+//         },
+//         set() {
+//             throw new Error("Este campo activa es un virtual, no se puede establecer así.")
+//         }
+//     }
+
+// }, {
+//     timestamps : false
+// });
+
+module.exports = Deuda

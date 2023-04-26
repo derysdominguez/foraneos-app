@@ -20,7 +20,11 @@ import Rep3 from './views/reportes/rep3';
 import Usuarios from './views/Usuarios';
 import CancelacionMatricula from './views/CancelacionMatricula';
 import Cuentas from './views/cuentas';
+<<<<<<< HEAD
 import Deudas from './views/deudas';
+=======
+import { Alumnos } from './views/Alumnos';
+>>>>>>> 00c3ca8ae960cc48414d711f8fbdd0251a1bfc2c
 
 
 function App() {
@@ -37,6 +41,7 @@ function App() {
         <Route path="/libroContable" element = {<LibroContable />} />
         <Route path="/mensualidad" element = {<Mensualidad />} />
         <Route path="/cancelacion" element = {<CancelacionMatricula />} />
+        <Route path="/alumnos" element = {<Alumnos/>} />
         <Route path="/usuarios" element = {<Usuarios />} />
         <Route path="/reportes" element = {<Reportes />} />
         <Route path="/reportes/rep1" element = {<Rep1 />} />
