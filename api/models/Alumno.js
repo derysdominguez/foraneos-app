@@ -1,7 +1,7 @@
 const {DataTypes} = require("sequelize");
 const sequelize = require("../database/database.js");
 const Beca = require("./Beca.js");
-
+// Validar que codigo coincida con el formato.
 const Alumno = sequelize.define("alumno", {
     id : {
         type: DataTypes.INTEGER,

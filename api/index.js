@@ -6,6 +6,7 @@ const Asiento = require("./models/Asiento.js");
 const AsientoDetalle = require("./models/AsientoDetalle.js");
 const Cuenta = require("./models/Cuenta.js");
 const Mensualidad = require("./models/Mensualidad.js");
+const Deuda = require("./models/Deuda.js");
 
 const app = require("./app.js");
 require("dotenv").config();

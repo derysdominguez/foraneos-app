@@ -3,15 +3,15 @@ const router = Router();
 
 const {
   createMensualidadAlumno,
-  getMensualidadesAlumno,
-  updateMensualidad,
-  deleteMensualidad,
+  getMensualidadesAlumno
+  // updateMensualidad,
+  // deleteMensualidad,
 } = require("../controllers/mensualidad.controller.js");
 
 
-router.get('/mensualidades/:id', getMensualidadesAlumno);
-router.post('/mensualidades/:id', createMensualidadAlumno);
-router.put('/mensualidades', updateMensualidad);
-router.delete('/mensualidades', deleteMensualidad);
+router.get('/:id', getMensualidadesAlumno);
+router.post('/:id', createMensualidadAlumno);
+// router.put('/mensualidades', updateMensualidad);
+// router.delete('/mensualidades', deleteMensualidad);
 
 module.exports = router;
