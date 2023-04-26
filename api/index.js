@@ -15,7 +15,7 @@ const port = process.env.PORT;
 async function main() {
     try {
         await sequelize.authenticate();
-        await sequelize.sync({force:false});
+        await sequelize.sync({force:true});
         console.log("Conexión exitosa");
         app.listen(port);
         console.log("Server is listening on port", port);
