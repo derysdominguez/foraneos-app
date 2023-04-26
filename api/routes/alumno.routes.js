@@ -6,6 +6,6 @@ router.get('/', getAlumnos);
 router.get('/:id', getAlumnoById);
 router.post('/', createAlumno);
 router.put('/', setAlumnoInactivo);
-router.get('/totalbecas', getReporteBecadosPorGrado);
+router.get('/reporte/totalbecas', getReporteBecadosPorGrado);
 
 module.exports = router;
