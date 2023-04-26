@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import {AiOutlineEdit} from 'react-icons/ai'
+import { BsFillEraserFill } from 'react-icons/bs';
 import Swal from 'sweetalert2'
 
 function TableGenerator(props) {
@@ -125,6 +126,34 @@ function TableGenerator(props) {
     setDeudasModal(true)
   }
 
+  const handleDelete = async (index) => { 
+    Swal.fire({
+        title: 'Eliminar',
+        text: "Estas seguro de eliminar este item?",
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Eliminar', 
+        cancelButtonText: 'Cancelar'
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+              const response = await fetch(`http://localhost:4000/deudas/${data[index].id}`, {
+                  method: 'DELETE',
+              });
+          } catch (error) {
+              console.log(error)
+          }
+          Swal.fire({
+              icon: 'success',
+              title: 'Eliminado con exito',
+              text: 'Revisa la tabla para mas detalles.',
+          })
+        }
+    })
+  }
+
   const renderTableHeader = () => {
     return (
       <thead>
@@ -154,6 +183,7 @@ function TableGenerator(props) {
               
               <td className='d-flex gap-1 justify-content-center'>
                 <Button variant='warning' onClick={()=>handleShow(index)}><AiOutlineEdit/></Button>
+                <Button variant='danger' onClick={()=>handleDelete(index)} ><BsFillEraserFill /></Button>
               </td>
             </tr>
           );
