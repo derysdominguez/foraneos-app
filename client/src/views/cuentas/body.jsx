@@ -10,10 +10,7 @@ const Body = () => {
      * ? Configuracion modals
      */
     const [cuenta, setCuenta] = useState(false);
-    const [subCuenta, setSubCuenta] = useState(false);
     const handleShowCuenta = () => setCuenta(true);
-    const handleCloseSubCuenta = () => setSubCuenta(false);
-    const handleShowSubCuenta = () => setSubCuenta(true);
 
     const handleCloseCuenta = () => {
         Swal.fire({
@@ -58,8 +55,6 @@ const Body = () => {
         'nombre' : '', 
         'clasificacion' : 'activo'
     })
-
-    const [numeracion, setNumeracion] = useState()
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -130,11 +125,12 @@ const Body = () => {
             'nombre' : '', 
             'clasificacion' : 'pasivo'
         })
+        setCuenta(false)
     }
 
     useEffect(()=> {
         getCuentas()
-    }, [valorCuenta])
+    }, [])
 
     return (
         <div className='bodyText bg-white w-100 p-4 rounded d-flex align-items-start d-flex gap-2 flex-wrap justify-content-evenly'>
