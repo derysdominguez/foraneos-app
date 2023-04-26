@@ -11,7 +11,6 @@ const Body = () => {
     const [showSuccess, setShowSuccess] = useState(false);
     const [showDanger, setShowDanger] = useState(false);
     const [showDanger2, setShowDanger2] = useState(false);
-    const [enviarAsientos, setEnviarAsientos] = useState({})
     
     const [infoAsiento, setInfoData] = useState({
         descripcion : '', 
@@ -92,21 +91,22 @@ const Body = () => {
             };
         });
 
-        setEnviarAsientos({
+        const enviarCompletos = {
             'fecha_asiento' : fecha, 
             'descripcion' : descripcion, 
             'asientodetalles' : asientosDetallesConvertidos
-        })
-
+        }
+        
         try {
             const response = await fetch('http://localhost:4000/asientos/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(enviarAsientos),
+                body: JSON.stringify(enviarCompletos),
             });
-            const data = await response.json();
+            const dataCenter = await response.json();
+            console.log(dataCenter.message)
         } catch (error) {
             console.log(error)
         }
@@ -220,7 +220,7 @@ const Body = () => {
             const [response, response2] = await Promise.all([fetch(url), fetch(url2)])
             const [lbJSON, lbJSON2] = await Promise.all([response.json(), response2.json()])
             const newLBSON = lbJSON.map(({ codigo, nombre }) => ({ codigo, nombre }));
-            const newLBSON2 = lbJSON2.map(({ codigo, fecha_asiento, descripcion }) => ({ codigo, fecha_asiento, descripcion }));
+            const newLBSON2 = lbJSON2.map(({ codigo, fecha_registrado, descripcion }) => ({ codigo, fecha_registrado, descripcion }));
             setData(newLBSON)
             setData2(newLBSON2)
         } catch (error) {
@@ -234,9 +234,8 @@ const Body = () => {
     }
 
     useEffect(()=> {
-        console.log(JSON.stringify(enviarAsientos),)
         api()
-    }, [enviarAsientos])
+    }, [data2])
 
     
     const filtrar = data ? data.filter((element) =>
@@ -334,7 +333,7 @@ const Body = () => {
                             <ListGroup.Item>Deudor</ListGroup.Item>
                             {allAsientos.filter(asiento => asiento.naturaleza === 'Deudor').map((asiento, index) => (
                                 <ListGroup.Item key={index}  className="d-flex justify-content-between align-items-center">{buscar(asiento.cuenta)} - {asiento.monto}
-                                    <Button variant="danger" onClick={() => handleDelete(index)}>X</Button> 
+                                    <Button variant="danger" onClick={() => handleDelete(allAsientos.indexOf(asiento))}>X</Button> 
                                 </ListGroup.Item>
                             ))}
                         </ListGroup>

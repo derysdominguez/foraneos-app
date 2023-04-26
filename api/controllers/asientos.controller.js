@@ -68,6 +68,7 @@ module.exports.createAsiento = async (req, res) => {
       path.resolve(__dirname, "../config/contador-asiento.json"),
       nuevosValores
     );
+    console.log('qassafdsgsfhkghss')
     return res.status(500).json({ message: error.message });
   }
 };

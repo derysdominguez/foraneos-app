@@ -11,7 +11,8 @@ const Deuda = require("./models/Deuda.js");
 const app = require("./app.js");
 require("dotenv").config();
 
-const port = process.env.PORT;
+const port = process.env.DB_PORT;
+
 async function main() {
     try {
         await sequelize.authenticate();
