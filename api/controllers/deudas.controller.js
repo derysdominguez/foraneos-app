@@ -14,11 +14,15 @@ module.exports.getDeudas = async (req, res) => {
 module.exports.createDeuda = async (req, res) => {
     try {
         const {acreedor, cuota, monto_total, fecha_adquirida, fecha_finalizacion, tasa} = req.body;
-        
-        const deudas = await Deuda.create({
-            acreedor, cuota, monto_total, fecha_adquirida, fecha_finalizacion, tasa
+        const deuda = await Deuda.create({
+            acreedor,
+            cuota,
+            monto_total,
+            fecha_adquirida,
+            fecha_finalizacion,
+            tasa
         });
-        res.json(deudas);
+        res.status(201).json(deuda);
     } catch (error)  {
         return res.status(500).json({message : error.stack});
     }

@@ -1,5 +1,7 @@
 const Alumno = require('../models/Alumno');
 
+const grados = ["Kinder", "Preparatoria", "Primero", "Segundo", "Tercero", "Cuarto", "Quinto", "Sexto", "Septimo", "Octavo", "Noveno", "Decimo", "Undecimo"];
+
 async function getAlumnos(req, res) {
     try {
         const alumnos = await Alumno.findAll();
@@ -20,7 +22,7 @@ async function createAlumno(req, res) {
             codigo,
             nombre,
             grado,
-            becaId
+            becaid: becaId
         })
        res.status(201).json(alumno);
     } catch (error) {
@@ -57,9 +59,41 @@ async function getAlumnoById (req, res) {
         res.status(500).json({ message: error.message })
     }
 }
+
+async function getReporteBecadosPorGrado (req, res) {
+    try {
+        const alumnosBecadosPorGrado = [];
+        for (let grado = 1; grado <= 13; i++) {
+            const alumnos = await Alumno.findAll({
+                attributes: ["id"],
+                where: {
+                  grado: grado,
+                },
+            });
+            let completa = 0; let media_beca = 0; let sin_beca = 0;
+            alumnos.forEach((alumno) => {
+                const {becaid} = alumno;
+                if (becaid === 1) completa++;
+                if (becaid === 2) media_beca++;
+                if (becaid === 3) sin_beca++;
+            });
+            alumnosBecadosPorGrado.push({
+                grado : grados[grado - 1],
+                completa,
+                media_beca,
+                sin_beca
+            });
+        }
+        res.json(alumnosBecadosPorGrado);
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+}
+
 module.exports = {
     getAlumnos,
     createAlumno,
     setAlumnoInactivo,
-    getAlumnoById
+    getAlumnoById,
+    getReporteBecadosPorGrado
 }

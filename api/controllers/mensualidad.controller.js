@@ -30,6 +30,10 @@ const ordenDeMensualiadades = [
   "junio",
 ];
 
+const grados = ["Kinder", "Preparatoria", "Primero", "Segundo", "Tercero", "Cuarto", "Quinto", "Sexto", "Septimo", "Octavo", "Noveno", "Decimo", "Undecimo"];
+
+const diaDePago = 15;
+
 module.exports.getMensualidadesAlumno = async (req, res) => {
   try {
     const { id } = req.params;
@@ -64,7 +68,7 @@ module.exports.createMensualidadAlumno = async (req, res) => {
   }
 };
 
-module.exports.getReporte = async (req, res) => {
+module.exports.getReporteMensualidadesPorGrado = async (req, res) => {
   try {
     const { grado } = req.params;
     const alumnos = await Alumno.findAll({
@@ -108,16 +112,57 @@ module.exports.getReporte = async (req, res) => {
       
       if (tieneHasta < 9) {
         ordenDeMensualiadades.slice(tieneHasta + 1).forEach(mensualidadNoPagada => {
-            mensualidadesAlumno[mensualidadNoPagada] = ""
+            mensualidadesAlumno[mensualidadNoPagada] = "";
         });
       }
 
       mensualidadesDelGrado.push(mensualidadesAlumno)
     });
-    res.send(mensualidadesDelGrado);
+    res.json(mensualidadesDelGrado);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+};
+
+module.exports.getReporteMorosos = async (req, res) => {
+  try {
+    const fechaActual = moment();
+    const mesMorosoAsString = fechaActual.date() < diaDePago + 1 ? fechaActual.subtract(1, 'month').format('M') : fechaActual.format('M');
+    const mesMoroso = parseInt(mesMorosoAsString); 
+    const morososPorGrado = [];
+    for (let grado = 1; grado <= 13; i++){
+      const alumnos = await Alumno.findAll({
+        attributes: ["id"],
+        where: {
+          grado: grado,
+        },
+      });
+      let morosos = 0;
+      if (alumnos) {
+        alumnos.forEach(async alumno => {
+          const mensualidad = await Mensualidad.findOne({
+            where : {
+              where : {
+                alumnoid : alumno.id,
+                mes : meses[mesMoroso - 1]
+              }
+            }
+          });
+          if (!mensualidad || moment(mensualidad.fecha_pago).date() > diaDePago ) {
+            morosos++;
+          }
+        });
+      }
+      morososPorGrado.push({nombre : grados[grado] , cantidad : morosos});
+    }
+    res.json(morososPorGrado);
+  } catch {
+    res.status(500).json({message : error.message});
+  }
+};
+
+module.exports.getReporteAlumnosConPagoPerfecto = async (req, res) => {
+
 };
 
 module.exports.updateMensualidad = () => {};
