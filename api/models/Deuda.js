@@ -32,19 +32,12 @@ const Deuda = sequelize.define("deuda", {
     fecha_finalizacion : {
         type : DataTypes.DATEONLY,
         allowNull : false,
-        validate : {
-            isAfter : this.fecha_adquirida
-        }
     },
     tasa : {
         type : DataTypes.DOUBLE ,
         allowNull : false,
         precision : 11,
         scale : 2,
-        validate : {
-            min : 0,
-            max : 1
-        }
     }, 
     tasa_porcentaje : {
         type : DataTypes.VIRTUAL,
