@@ -20,6 +20,7 @@ import Rep3 from './views/reportes/rep3';
 import Usuarios from './views/Usuarios';
 import CancelacionMatricula from './views/CancelacionMatricula';
 import Cuentas from './views/cuentas';
+import Deudas from './views/deudas';
 
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
         <Route path="/reportes/rep8" element = {<Rep8 />} />
         <Route path="/reportes/rep9" element = {<Rep9 />} />
         <Route path="/cuentas" element = {<Cuentas />} />
+        <Route path="/deudas" element = {<Deudas />} />
       </Routes>
     </Router>
   )

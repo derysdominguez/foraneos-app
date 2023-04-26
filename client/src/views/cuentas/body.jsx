@@ -101,7 +101,6 @@ const Body = () => {
             }else{
                 errorMsg = `El codigo no es de la clasificacion ${clasificacion}`
             }
-            
         }
     
         if (errorMsg) {
