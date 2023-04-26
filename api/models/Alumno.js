@@ -29,6 +29,11 @@ const Alumno = sequelize.define("alumno", {
         type: DataTypes.BOOLEAN,
         defaultValue : true,
         allowNull : false
+    },
+    pago_perfecto : {
+        type : DataTypes.BOOLEAN,
+        defaultValue : true,
+        alowNull : false
     }
 }, {
     timestamps: false,

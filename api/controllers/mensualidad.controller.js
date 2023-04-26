@@ -34,6 +34,11 @@ const grados = ["Kinder", "Preparatoria", "Primero", "Segundo", "Tercero", "Cuar
 
 const diaDePago = 15;
 
+const fechasDondePagan = ordenDeMensualiadades.map(mes => {
+  const anio = ["septiembre", "octubre", "noviembre", "diciembre"].includes(mes) ? 2022 : 2023
+  return moment([anio, meses.indexOf(mes) + 1, diaDePago]).format('YYYY-MM-DD');
+}); 
+
 module.exports.getMensualidadesAlumno = async (req, res) => {
   try {
     const { id } = req.params;
@@ -59,6 +64,10 @@ module.exports.createMensualidadAlumno = async (req, res) => {
         mes: meses[mes - 1],
         fecha_pago,
       });
+      if (newMensualidad.fecha_pago > fechasDondePagan[ordenDeMensualiadades.indexOf(newMensualidad.mes)]) {
+        alumnoId.pago_perfecto = false;
+        await alumnoId.save();
+      }
       res.json(newMensualidad);
     } else {
       throw new Error("No existe ese alumno.");
@@ -156,15 +165,64 @@ module.exports.getReporteMorosos = async (req, res) => {
       morososPorGrado.push({nombre : grados[grado] , cantidad : morosos});
     }
     res.json(morososPorGrado);
-  } catch {
+  } catch (error) {
     res.status(500).json({message : error.message});
   }
 };
 
 module.exports.getReporteAlumnosConPagoPerfecto = async (req, res) => {
-
+  try {
+    const alumnosConPagoPerfecto = await Alumno.findAll({
+      attributes : ["nombre", "codigo", "grado", "becaid"],
+      where : {
+        pago_perfecto : true
+      }, 
+    });
+    const becas = ["Beca completa", "Media beca", "Sin beca"];
+    const alumnosConFormato = [];
+    alumnosConPagoPerfecto.forEach(alumno => {
+      const {nombre, codigo, grado, becaid} = alumno; 
+      alumnosConFormato.push({
+        nombre,
+        codigo,
+        grado : grados[grado - 1],
+        tipo_beca : becas[becaid - 1]
+      });
+    });
+    res.json(alumnosConFormato);
+  } catch (error) {
+    res.status(500).json({message : error.message});
+  }
 };
 
-module.exports.updateMensualidad = () => {};
+module.exports.updateTodasMensualidades = async (req, res) => {
+  try {
+    const { id: alumnoid } = req.params;
+    const alumno = await Alumno.findByPk(alumnoid);
+    if (alumno) {
+      const mensualidades = req.body;
+      mensualidades.forEach(async mensualidad => {
+        const {mes, fecha_pago} = mensualidad;
+        const updatedMensualidad = await Mensualidad.findOne({
+          where : {
+            mes : mes,
+            alumnoid : alumnoid
+          }
+        });
+        updatedMensualidad.fecha_pago = fecha_pago;
+        if (updatedMensualidad.fecha_pago && updatedMensualidad.fecha_pago > fechasDondePagan[ordenDeMensualiadades.indexOf(updatedMensualidad.mes)]) {
+          alumno.pago_perfecto = false;
+          await alumno.save();
+        }
+        await updatedMensualidad.save();
+      });
+      res.sendStatus(204);
+    } else {
+      throw new Error("No existe ese alumno.");
+    }
+  } catch (error) {
+    res.status(500).json({message : error.message});
+  }
+};
 
 module.exports.deleteMensualidad = () => {};

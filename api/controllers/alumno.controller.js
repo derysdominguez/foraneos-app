@@ -1,6 +1,20 @@
-const Alumno = require('../models/Alumno');
+const Alumno = require('../models/Alumno.js');
+const Mensualidad = require("../models/Mensualidad.js");
 
 const grados = ["Kinder", "Preparatoria", "Primero", "Segundo", "Tercero", "Cuarto", "Quinto", "Sexto", "Septimo", "Octavo", "Noveno", "Decimo", "Undecimo"];
+const ordenDeMensualiadades = [
+    "septiembre",
+    "octubre",
+    "noviembre",
+    "diciembre",
+    "enero",
+    "febrero",
+    "marzo",
+    "abril",
+    "mayo",
+    "junio",
+  ];
+  
 
 async function getAlumnos(req, res) {
     try {
@@ -23,7 +37,18 @@ async function createAlumno(req, res) {
             nombre,
             grado,
             becaid: becaId
-        })
+        });
+
+        ordenDeMensualiadades.forEach(async (mes) => {
+            await Mensualidad.create({
+                alumnoid : alumno.id,
+                fecha_pago : null,
+                mes
+            });
+        });
+
+
+        
        res.status(201).json(alumno);
     } catch (error) {
         res.status(500).json({ message: error.message });
