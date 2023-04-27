@@ -1,3 +1,5 @@
 {
-  "dependencies": {}
+  "dependencies": {
+    "react-to-pdf": "^0.0.14"
+  }
 }

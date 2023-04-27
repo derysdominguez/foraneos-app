@@ -226,7 +226,7 @@ const Body = () => {
             const [response, response2] = await Promise.all([fetch(url), fetch(url2)])
             const [lbJSON, lbJSON2] = await Promise.all([response.json(), response2.json()])
             const newLBSON = lbJSON.map(({ codigo, nombre }) => ({ codigo, nombre }));
-            const newLBSON2 = lbJSON2.map(({ codigo, fecha_registrado, descripcion }) => ({ codigo, fecha_registrado, descripcion }));
+            const newLBSON2 = lbJSON2.map(({ codigo, fecha_asiento, descripcion, asientodetalles }) => ({ codigo, fecha : fecha_asiento, descripcion, asientodetalles }));
             setData(newLBSON)
             setData2(newLBSON2)
         } catch (error) {
@@ -251,7 +251,7 @@ const Body = () => {
     return (
         <div className='bodyText bg-white w-100 p-4 rounded d-flex align-items-start d-flex gap-2 flex-wrap justify-content-evenly'>
             <div className='bg-color-brand w-100 p-3 rounded text-white d-flex justify-content-between align-items-center'>
-                <span>Libro Diario Contable</span>
+                <span className='fs-5 fw-bold'>Libro Diario Contable</span>
                 <Button className='d-flex align-items-center fw-bold' variant="light" onClick={handleShow}>
                     <BiBookAdd className='me-2'/>
                     <span>
@@ -259,10 +259,14 @@ const Body = () => {
                     </span>
                 </Button>
             </div>
-            <div className='w-100 overflow-auto p-0 d-flex rounded align-items-center justify-content-center'>
+            <div className='w-100 mt-4 overflow-auto p-0 d-flex rounded align-items-center justify-content-center'>
                 <div className='col-12 mt-1 w-100 h-libroContable'>
-                    {/*Cuerpo del libro contable */}
-                    <TableGenerator data={data2 ?? [{}]}></TableGenerator> 
+                    {/* Cuerpo del libro contable */}
+                    {data2.length > 0 ? (
+                        <TableGenerator dataCompleta={data2} />
+                        ) : (
+                        <div>Cargando...</div>
+                    )}
                 </div>
             </div>
             <Modal show={showModal} onHide={handleClose} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
@@ -295,13 +299,13 @@ const Body = () => {
                             <Form.Group className='mb-3'>
                                 <Form.Label>Movimiento</Form.Label>
                                 <Form.Select name='naturaleza' value={asientos.naturaleza} onChange={handleChange}>
-                                    <option>Deudor</option>
-                                    <option>Acreedor</option>
+                                    <option value={"Deudor"}>Debe</option>
+                                    <option value={"Acreedor"}>Haber</option>
                                 </Form.Select>
                             </Form.Group>
                             <Form.Group className='mb-3'>
                                 <Form.Label>Monto</Form.Label>
-                                <Form.Control name='monto' value={asientos.monto} onChange={handleChange} type='number' placeholder="2500 < Monto < 75000" min={2500} max={75000}></Form.Control>
+                                <Form.Control name='monto' value={asientos.monto} onChange={handleChange} type='number' placeholder="Ingrese monto" min={2500} max={75000}></Form.Control>
                             </Form.Group>
                             
                             <Alert show={showDanger} variant="danger">
@@ -336,7 +340,7 @@ const Body = () => {
                     </div>
                     <div className='col bg-color-brand p-5 rounded shadow-lg '>
                         <ListGroup className='col mb-3'>
-                            <ListGroup.Item>Deudor</ListGroup.Item>
+                            <ListGroup.Item>Debe</ListGroup.Item>
                             {allAsientos.filter(asiento => asiento.naturaleza === 'Deudor').map((asiento, index) => (
                                 <ListGroup.Item key={index}  className="d-flex justify-content-between align-items-center">{buscar(asiento.cuenta)} - {asiento.monto}
                                     <Button variant="danger" onClick={() => handleDelete(allAsientos.indexOf(asiento))}>X</Button> 
@@ -344,7 +348,7 @@ const Body = () => {
                             ))}
                         </ListGroup>
                         <ListGroup className='col'>
-                            <ListGroup.Item>acreedor</ListGroup.Item>
+                            <ListGroup.Item>Haber</ListGroup.Item>
                             {allAsientos.filter(asiento => asiento.naturaleza === 'Acreedor').map((asiento, index) => (
                                 <ListGroup.Item key={index} className="d-flex justify-content-between align-items-center">{buscar(asiento.cuenta)} - {asiento.monto}
                                     <Button variant="danger" onClick={() => handleDelete(allAsientos.indexOf(asiento))}>X</Button> 
