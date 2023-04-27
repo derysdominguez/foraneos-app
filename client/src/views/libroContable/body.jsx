@@ -217,8 +217,8 @@ const Body = () => {
 
     const url = 'http://localhost:4000/cuentas'
     const url2 = 'http://localhost:4000/asientos/'
-    const [data, setData] = useState()
-    const [data2, setData2] = useState()
+    const [data, setData] = useState([])
+    const [data2, setData2] = useState([])
 
 
     const api = async () => {
@@ -262,7 +262,7 @@ const Body = () => {
             <div className='w-100 overflow-auto p-0 d-flex rounded align-items-center justify-content-center'>
                 <div className='col-12 mt-1 w-100 h-libroContable'>
                     {/* Cuerpo del libro contable */}
-                    <TableGenerator data={data2 ? data2 : [{}]}></TableGenerator>
+                    <TableGenerator data={data2 ?? [{}]}></TableGenerator>
                 </div>
             </div>
             <Modal show={showModal} onHide={handleClose} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
