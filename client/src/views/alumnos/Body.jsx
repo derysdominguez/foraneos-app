@@ -3,7 +3,7 @@ import GradoSelect from '../../components/GradoSelect'
 import { TablaAlumnos } from './TablaAlumnos'
 import { Button, Form, Modal } from 'react-bootstrap'
 import { BiBookAdd } from 'react-icons/bi'
-const URL = 'http://localhost:4001/alumnos'
+const URL = 'http://localhost:4000/alumnos'
 import Swal from 'sweetalert2'
 
 export function Body() {

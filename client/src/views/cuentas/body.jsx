@@ -154,7 +154,13 @@ const Body = () => {
             </div>
             <div className='w-100 overflow-auto p-0 d-flex rounded align-items-center justify-content-center'>
                 <div className='col-12 mt-1 w-100 h-libroContable'>
-                    <TableGenerator data={allCuentas ? allCuentas : [{}]}></TableGenerator>
+                    
+                    {allCuentas.length > 0 ? (
+                        <TableGenerator data={allCuentas} />
+                        ) : (
+                        <div>Cargando...</div>
+                    )}
+
                     <Modal show={cuenta} onHide={handleCloseCuenta} aria-labelledby="contained-modal-title-vcenter" centered>
                         <Modal.Header closeButton>
                             <Modal.Title>Creacion de cuentas</Modal.Title>
@@ -164,7 +170,7 @@ const Body = () => {
                                 <Form>
                                     <Form.Group className='mb-3'>
                                         <Form.Label>Codigo</Form.Label>
-                                        <Form.Control name='codigo' value={valorCuenta.codigo} onChange={handleChange} type='text' placeholder="Ingrese "></Form.Control>
+                                        <Form.Control name='codigo' value={valorCuenta.codigo} onChange={handleChange} type='number' placeholder="Ingrese "></Form.Control>
                                     </Form.Group>
                                     <Form.Group className='mb-3'>
                                         <Form.Label>Nombre</Form.Label>
