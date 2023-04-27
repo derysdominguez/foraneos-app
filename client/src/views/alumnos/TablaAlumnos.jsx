@@ -115,7 +115,34 @@ export function TablaAlumnos({data}) {
     )
     setAlumnosModal(false)
   }
-  
+  const handleDelete = async (index) => { 
+    Swal.fire({
+        title: 'Eliminar',
+        text: "Estas seguro de eliminar este elemento?",
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Eliminar', 
+        cancelButtonText: 'Cancelar'
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+              const response = await fetch(`http://localhost:4000/alumnos/${data[index].id}`, {
+                  method: 'DELETE',
+              });
+          } catch (error) {
+              console.log(error)
+          }
+          Swal.fire({
+              icon: 'success',
+              title: 'Eliminado con exito',
+              text: 'Revisa la tabla para mas detalles.',
+          })
+        }
+    })
+  }
+
   return (
     <>
       <Table striped bordered hover>
@@ -143,7 +170,7 @@ export function TablaAlumnos({data}) {
                   <Button variant='warning' onClick={() => handleShowModal(index)}>
                     <AiOutlineEdit />
                   </Button>
-                  <Button variant='danger' onClick={() => handleShowModal(index)}>
+                  <Button variant='danger' onClick={() => handleDelete(index)}>
                     <BsEraserFill />
                   </Button>
                 </td>
