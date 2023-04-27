@@ -28,6 +28,7 @@ function TableCancelacion(props) {
           }).then((result) => {
             if (result.isConfirmed) {
               console.log('aqui se cancela la matricula del estudiante, esta es la informacion: ', cancelInfo);
+              setShowModal(false);
             }
           })
         : Swal.fire({
