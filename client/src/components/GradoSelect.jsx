@@ -5,6 +5,8 @@ function GradoSelect(props) {
   const handleChange = (event) => {
     const selectedGrado = event.target.value;
     props.onGradoChange(selectedGrado);
+    const subtitle = document.getElementById('header-subtitle');
+    subtitle.innerText = 'Grado: ' + selectedGrado;
   }
 
   return (

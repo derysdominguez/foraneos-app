@@ -9,8 +9,8 @@ import Pdf from 'react-to-pdf'
 const ref = React.createRef()
 function Rep4() {
   const Title = 'Reporte de mensualidades'
-  const Subtitle = 'Primer grado'
-  const fechaEmision = '25/3/2023'
+  const Subtitle = ''
+  const fechaEmision = new Date();
   const options = {
     orientation: 'landscape',
     unit: 'in',
@@ -36,13 +36,13 @@ function Rep4() {
             xl={10}>
             <div className='d-flex flex-column w-100 align-items-center gap-4'>
               <HeaderTitle></HeaderTitle>
-              <div className='bodyText bg-white w-100 h-control p-4 rounded d-flex align-items-center d-flex gap-2 flex-wrap justify-content-evenly'>
+              <div className='bodyText bg-white w-100 p-4 rounded d-flex align-items-center d-flex gap-2 flex-wrap justify-content-evenly'>
                 {/* Hacer a componente body report */}
                 <div className='w-100' ref={ref}>
                   <HeaderReport
                     title={Title}
                     subtitle={Subtitle}
-                    dateReport={fechaEmision}></HeaderReport>
+                    dateReport={fechaEmision.toLocaleDateString()}></HeaderReport>
                   {/* Cuerpo del report */}
                   <BodyReport4></BodyReport4>
                 </div>

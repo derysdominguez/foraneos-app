@@ -16,7 +16,7 @@ const options = {
 function Rep3() {
   const Title = 'Estado de situacion financiera'
   const Subtitle = 'Mes de marzo'
-  const fechaEmision = '25/3/2023'
+  const fechaEmision = new Date();
   return (
     <>
       <Container fluid>
@@ -42,8 +42,8 @@ function Rep3() {
                 <div className='w-100 overflow-auto' ref={ref}>
                   <HeaderReport
                     title={Title}
-                    subtitle={Subtitle}
-                    dateReport={fechaEmision}></HeaderReport>
+                    // subtitle={Subtitle}
+                    dateReport={fechaEmision.toLocaleDateString()}></HeaderReport>
                   {/* Cuerpo del report */}
                   <BodyReport3 />
                 </div>

@@ -10,8 +10,8 @@ import Pdf from 'react-to-pdf'
 const ref = React.createRef()
 function Rep5() {
   const Title = 'Reporte Ganancias y perdidas'
-  const Subtitle = 'Mes de marzo'
-  const fechaEmision = '25/3/2023'
+  const Subtitle = ''
+  const fechaEmision = new Date();
   const options = {
     orientation: 'landscape',
     unit: 'in',
@@ -43,7 +43,7 @@ function Rep5() {
                 <HeaderReport
                   title={Title}
                   subtitle={Subtitle}
-                  dateReport={fechaEmision}
+                  dateReport={fechaEmision.toLocaleDateString()}
                 />
                 {/* Cuerpo del report */}
                 <BodyReport5 />

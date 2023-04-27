@@ -5,10 +5,13 @@ function MesSelect(props) {
   const handleChange = (event) => {
     const selectedMes = event.target.value;
     props.onMesChange(selectedMes);
+
+    const subtitle = document.getElementById('header-subtitle');
+    subtitle.innerText = 'Mes #' + selectedMes;
   }
 
   return (
-      <FormSelect className="mb-3" onChange={handleChange}>
+      <FormSelect className="mb-3" onChange={handleChange} id='meses'>
         <option disabled selected value="00">Seleccione un mes</option>
         <option value="01">Enero</option>
         <option value="02">Febrero</option>
