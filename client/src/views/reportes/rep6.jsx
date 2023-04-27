@@ -10,7 +10,7 @@ const ref = React.createRef()
 function Rep6() {
   const Title = 'Informe de porcentaje de alumnos'
   const Subtitle = 'Becados por grado'
-  const fechaEmision = '25/3/2023'
+  const fechaEmision = new Date();
   const options = {
     orientation: 'landscape',
     unit: 'in',
@@ -42,7 +42,7 @@ function Rep6() {
                 <HeaderReport
                   title={Title}
                   subtitle={Subtitle}
-                  dateReport={fechaEmision}
+                  dateReport={fechaEmision.toLocaleDateString()}
                 />
                 {/* Cuerpo del report */}
                 <BodyReport6 />

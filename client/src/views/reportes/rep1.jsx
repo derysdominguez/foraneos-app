@@ -8,16 +8,27 @@ import { BsPrinter, BsArrowLeftCircle } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
 import BtnInferiores from './imprimir'
 import Pdf from 'react-to-pdf'
+import { useEffect } from 'react'
 const ref = React.createRef()
 function Rep1() {
   const Title = 'Listado de ingresos y egresos'
-  const Subtitle = 'Mes de marzo'
-  const fechaEmision = '25/3/2023'
+  const Subtitle = '';
+  const fechaEmision = new Date();
   const options = {
     orientation: 'landscape',
     unit: 'in',
     format: [13, 13]
   }
+
+
+  // const select = document.getElementById('meses');
+  
+  // useEffect(() => {
+    
+  //   console.log(select != null ? select.options[select.selectedIndex].text : 'hijole');
+  // }, [select.options[select.selectedIndex].text])
+  
+
   return (
     <>
       <Container fluid>
@@ -44,7 +55,7 @@ function Rep1() {
                <HeaderReport
                   title={Title}
                   subtitle={Subtitle}
-                  dateReport={fechaEmision}></HeaderReport>
+                  dateReport={fechaEmision.toLocaleDateString()}></HeaderReport>
                 {/* Cuerpo del report */}
                 <BodyReport1></BodyReport1>
                </div>

@@ -10,7 +10,7 @@ const ref = React.createRef()
 function Rep2() {
   const Title = 'Informe de deudas'
   const Subtitle = 'Mes de marzo'
-  const fechaEmision = '25/3/2023'
+  const fechaEmision = new Date();
   const options = {
     orientation: 'landscape',
     unit: 'in',
@@ -41,8 +41,8 @@ function Rep2() {
                   {/* Hacer a componente body report */}
                   <HeaderReport
                     title={Title}
-                    subtitle={Subtitle}
-                    dateReport={fechaEmision}></HeaderReport>
+                    // subtitle={Subtitle}
+                    dateReport={fechaEmision.toLocaleDateString()}></HeaderReport>
                   {/* Cuerpo del report */}
                   <BodyReport2></BodyReport2>
                   {/* Botones inferiores */}

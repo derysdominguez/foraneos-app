@@ -11,7 +11,7 @@ const ref = React.createRef()
 function Rep9() {
   const Title = 'Informe de alumnos con pago perfecto'
   const Subtitle = 'Anio lectivo 2022-2023'
-  const fechaEmision = '25/3/2023'
+  const fechaEmision = new Date();
   const options = {
     orientation: 'landscape',
     unit: 'in',
@@ -43,7 +43,7 @@ function Rep9() {
                 <HeaderReport
                   title={Title}
                   subtitle={Subtitle}
-                  dateReport={fechaEmision}
+                  dateReport={fechaEmision.toLocaleDateString()}
                 />
                 {/* Cuerpo del report */}
                 <BodyReport8 />
