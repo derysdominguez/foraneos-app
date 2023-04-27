@@ -3,6 +3,8 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import {AiOutlineEdit} from 'react-icons/ai'
+import { BsEraserFill } from 'react-icons/bs'
+import Swal from 'sweetalert2'
 
 function TableGenerator(props) {
   
@@ -11,6 +13,34 @@ function TableGenerator(props) {
   const data = dataCompleta.map(({asientodetalles, ...resto})=> resto)
   const subData = dataCompleta.map(({asientodetalles, ...resto})=> asientodetalles)
   const subDataHeaders = ['Cuenta', 'Debe', 'Haber'];
+
+  const handleDelete = async (index) => { 
+    Swal.fire({
+        title: 'Eliminar',
+        text: "Estas seguro de eliminar este elemento?",
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Eliminar', 
+        cancelButtonText: 'Cancelar'
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+              const response = await fetch(`http://localhost:4000/asientos/${data[index].codigo}`, {
+                  method: 'DELETE',
+              });
+          } catch (error) {
+              console.log(error)
+          }
+          Swal.fire({
+              icon: 'success',
+              title: 'Eliminado con exito',
+              text: 'Revisa la tabla para mas detalles.',
+          })
+        }
+    })
+  }
 
   console.log(subData);
 
@@ -43,7 +73,7 @@ function TableGenerator(props) {
                 })}
                 <td className='d-flex gap-1 justify-content-center'>
                   <Button variant='warning'><AiOutlineEdit/></Button>
-                  <Button variant='warning'><AiOutlineEdit/></Button>
+                  <Button variant='danger' onClick={()=>handleDelete(index)}><BsEraserFill/></Button>
                 </td>
               </tr>
               {subData[index].length > 0 && (

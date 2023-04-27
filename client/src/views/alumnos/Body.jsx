@@ -8,7 +8,7 @@ import Swal from 'sweetalert2'
 
 export function Body() {
   const [data, setData] = useState([])
-  const [filteredData, setFilteredData] = useState([data])
+  const [filteredData, setFilteredData] = useState([])
   const [alumnosModal, setAlumnosModal] = useState()
 
   const handleShowModal = () => setAlumnosModal(true)
@@ -92,6 +92,7 @@ export function Body() {
         return item.grado.toLowerCase() === selectedGrado
       }
     })
+    console.log(data)
     setFilteredData(filter)
   }
 
@@ -106,16 +107,20 @@ export function Body() {
           /***
            * ? se Cumple todo, proceder a la peticion
            */
-          const response = await fetch('http://localhost:4000/alumnos', {
+          const exists = data.some(item => Object.values(item).includes(codigo))
+          
+          if(exists === false) {
+            const response = await fetch('http://localhost:4000/alumnos', {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',
               },
               body: JSON.stringify(modelAlumnos),
-          });
-          const dataCenter = await response.json();
-          console.log(dataCenter)
-          console.log(modelAlumnos)
+            });
+            const dataCenter = await response.json();
+          }else{
+            errorMsg = 'Codigo ya existe'
+          }
         }else{
           errorMsg ='Nombre sobrepaso los 50 caracteres'
         }
@@ -157,8 +162,8 @@ export function Body() {
     <>
       <div className='bodyText bg-white w-100 p-4 rounded d-flex align-items-start d-flex gap-2 flex-wrap justify-content-evenly'>
         <div className='bg-color-brand w-100 p-3 rounded text-white d-flex gap-2 justify-content-between align-items-center'>
-          <span className='col-8'>Alumnos </span>
-          <GradoSelect onGradoChange={handleGradoChange} />
+          <span className='col-8 fs-5 fw-bold'>Alumnos </span>
+          <GradoSelect onGradoChange={handleGradoChange} opcionTodos={true} />
           <Button className='d-flex w-100 align-items-center fw-bold' variant="light" onClick={handleShowModal}>
             <BiBookAdd className='me-2'/>
             <span>
@@ -168,7 +173,11 @@ export function Body() {
         </div>
         <div className='w-100 overflow-auto p-0 d-flex rounded align-items-center justify-content-center'>
           <div className='col-12 mt-1 w-100 h-libroContable'>
-            <TablaAlumnos data={filteredData} />
+            {filteredData.length > 0 ? (
+              <TablaAlumnos data={filteredData} />
+            ) : (
+              <div className='w-100 h-100 p-5 d-flex align-items-center justify-content-center fs-5'>Sin datos</div>
+            )}
             <Modal show={alumnosModal} onHide={handleCloseAlumnosModal} aria-labelledby="contained-modal-title-vcenter" centered>
               <Modal.Header closeButton>
                   <Modal.Title>Creacion de alumnos</Modal.Title>
@@ -178,11 +187,11 @@ export function Body() {
                       <Form>
                           <Form.Group className='mb-3'>
                               <Form.Label>Codigo</Form.Label>
-                              <Form.Control name='codigo' value={modelAlumnos.codigo} onChange={handleChange} type='number' placeholder="Ingrese el acreedor"></Form.Control>
+                              <Form.Control name='codigo' value={modelAlumnos.codigo} onChange={handleChange} type='number' placeholder="Ingrese codigo del alumno"></Form.Control>
                           </Form.Group>
                           <Form.Group className='mb-3'>
                               <Form.Label>Nombre</Form.Label>
-                              <Form.Control name='nombre' value={modelAlumnos.nombre} onChange={handleChange} type='text' placeholder="Ingrese el acreedor"></Form.Control>
+                              <Form.Control name='nombre' value={modelAlumnos.nombre} onChange={handleChange} type='text' placeholder="Ingrese nombre del alumno"></Form.Control>
                           </Form.Group>
                           <Form.Group className='mb-3'>
                               <Form.Label>Grado</Form.Label>

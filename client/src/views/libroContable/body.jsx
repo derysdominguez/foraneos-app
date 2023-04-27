@@ -305,7 +305,7 @@ const Body = () => {
                             </Form.Group>
                             <Form.Group className='mb-3'>
                                 <Form.Label>Monto</Form.Label>
-                                <Form.Control name='monto' value={asientos.monto} onChange={handleChange} type='number' placeholder="2500 < Monto < 7500" min={2500} max={75000}></Form.Control>
+                                <Form.Control name='monto' value={asientos.monto} onChange={handleChange} type='number' placeholder="Ingrese monto" min={2500} max={75000}></Form.Control>
                             </Form.Group>
                             
                             <Alert show={showDanger} variant="danger">
