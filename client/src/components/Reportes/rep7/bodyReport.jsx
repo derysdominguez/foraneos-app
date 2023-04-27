@@ -7,7 +7,7 @@ import { Table } from "react-bootstrap";
 
 function BodyReport7() {
   /* Solo debes de llenar con los datos de la bd */
-  const url = "https://apimocha.com/foraneos-app/rep7";
+  const url = "http://localhost:4000/mensualidades/reporte/morosos";
   const [data, setData] = useState();
   const [morosos, setMorosos] = useState();
   const [totalMora, setTotalMora] = useState();

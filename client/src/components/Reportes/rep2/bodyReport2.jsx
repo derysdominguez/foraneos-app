@@ -13,7 +13,7 @@ const convertDateFormat = dateString => {
 
 function BodyReport2() {
     /* Es ejemplo, mandas el arreglo de objetos   */
-    const url = 'http://localhost:4000/deudas'
+    const url = 'https://apimocha.com/foraneos-app/rep1'
     const [data, setData] = useState()
 
     const api = async () => {

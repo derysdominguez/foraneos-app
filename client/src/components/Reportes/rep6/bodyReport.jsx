@@ -6,7 +6,7 @@ import TableGenerator from '../tablaGenerator'
 
 function BodyReport6() {
     /* Solo debes de llenar con los datos de la bd */
-    const url = 'https://apimocha.com/foraneos-app/rep6'
+    const url = 'http://localhost:4000/alumnos/reporte/totalbecas'
     const [data, setData] = useState()
     const [becaCompleta, setBecaCompleta] = useState()
     const [mediaBeca, setMediaBeca] = useState()

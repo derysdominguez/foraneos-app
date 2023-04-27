@@ -46,7 +46,8 @@ const AsientoDetalle = sequelize.define("asientodetalle", {
 
 Asiento.hasMany(AsientoDetalle, {
     foreignKey : "asientoid",
-    sourceKey : "codigo"
+    sourceKey : "codigo",
+    onDelete : "CASCADE"
 });
 
 AsientoDetalle.belongsTo(Asiento, {
