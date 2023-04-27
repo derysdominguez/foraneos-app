@@ -69,7 +69,7 @@ function TableBtn(props) {
                         {Object.keys(dateMen).map((propiedad, index) => (
                             <Form.Group key={index} className='mb-3 d-flex'>
                                 <Form.Label className='d-flex col-2 align-items-center m-0'><span>{propiedad}</span></Form.Label>
-                                <Form.Control className='col' type="text" defaultValue={dateMen[propiedad] ? dateMen[propiedad] : '-'}/>
+                                <Form.Control className='col' type="date" value={dateMen[propiedad] ? dateMen[propiedad] : '-'}/>
                             </Form.Group>
                         ))}
                     </Form>
