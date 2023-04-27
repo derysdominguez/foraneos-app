@@ -106,42 +106,11 @@ async function getAlumnoById(req, res) {
   }
 }
 
-async function getReporteBecadosPorGrado(req, res) {
-  try {
-    const alumnosBecadosPorGrado = []
-    for (let grado = 1; grado <= 13; i++) {
-      const alumnos = await Alumno.findAll({
-        attributes: ['id'],
-        where: {
-          grado: grado
-        }
-      })
-      let completa = 0
-      let media_beca = 0
-      let sin_beca = 0
-      alumnos.forEach((alumno) => {
-        const { becaid } = alumno
-        if (becaid === 1) completa++
-        if (becaid === 2) media_beca++
-        if (becaid === 3) sin_beca++
-      })
-      alumnosBecadosPorGrado.push({
-        grado: grados[grado - 1],
-        completa,
-        media_beca,
-        sin_beca
-      })
-    }
-    res.json(alumnosBecadosPorGrado)
-  } catch (error) {
-    res.status(500).json({ message: error.message })
-  }
-}
+
 
 module.exports = {
   getAlumnos,
   createAlumno,
   setAlumnoInactivo,
-  getAlumnoById,
-  getReporteBecadosPorGrado
+  getAlumnoById
 }

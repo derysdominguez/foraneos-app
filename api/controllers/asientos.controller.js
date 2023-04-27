@@ -77,75 +77,22 @@ module.exports.createAsiento = async (req, res) => {
   }
 };
 
-module.exports.getReporteIngesosEgresos = async (req, res) => {
-  const {mes} = req.body;
-  try {
-    const asientos = await Asiento.findAll({
-      include: {
-        // where : Sequelize.literal(`EXTRACT(MONTH FROM fecha_asiento) = ${mes}`),
-        model: AsientoDetalle,
-        attributes: { exclude: ["asientoid", "cuentaid"] },
-        include: {
-          model: Cuenta,
-          as: "cuenta",
-        },
-      },
-    });
-    console.log(asientos);
-
-    const asientosFormateados = [];
-    if (asientos) {
-      asientosRelevantes = asientos.forEach((asiento) => {
-        const { fecha_asiento, descripcion, asientodetalles } = asiento;
-        console.log(fecha_asiento);
-        console.log(descripcion);
-        console.log(asientodetalles);
-        asientodetalles.forEach((renglon) => {
-          if (renglon.dataValues.cuenta.dataValues.clasificacion === "ingreso") {
-            asientosFormateados.push({
-              fecha: fecha_asiento,
-              cuenta: renglon.dataValues.cuenta.dataValues.nombre,
-              descripcion,
-              monto: renglon.dataValues.cuenta.dataValues.monto,
-              entrada: "i",
-            });
-          }
-          if (
-            ["gasto-admin", "gasto-ventas"].includes(
-              renglon.dataValues.cuenta.dataValues.clasificacion
-            )
-          ) {
-            asientosFormateados.push({
-              fecha: fecha_asiento,
-              cuenta: renglon.dataValues.cuenta.dataValues.nombre,
-              descripcion,
-              monto: renglon.dataValues.cuenta.dataValues.monto,
-              entrada: "e",
-            });
-          }
-        });
-      });
-    } else{
-      res.json({estado : "Sin datos."})
-    }
-
-    res.json(asientosFormateados);
-  } catch (error) {
-    res.status(500).json({ message: error.stack });
-  }
-};
-
 module.exports.deleteAsiento = async (req, res) => {
   const { id: codigo } = req.params;
-  codigoString = codigo.toString();
+  codigo = codigo.toString();
   try {
     await Asiento.destroy({
       where: {
-        codigo: codigoString,
+        codigo
       },
     });
     res.sendStatus(204);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+};
+
+module.exports.updateAsiento = async (req, res) => {
+  const {id} = req.params;
+  
 };

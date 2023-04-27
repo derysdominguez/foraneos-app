@@ -11,9 +11,7 @@ const {
   // deleteMensualidad,
 } = require("../controllers/mensualidad.controller.js");
 
-router.get('/reporte/morosos', getReporteMorosos);
-router.get('/reporte/pagoperfecto', getReporteAlumnosConPagoPerfecto);
-router.get('/reporte/mensualidades/:grado', getReporteMensualidadesPorGrado);
+
 router.get('/:id', getMensualidadesAlumno);
 router.post('/:id', createMensualidadAlumno);
 router.put('/:id', updateTodasMensualidades);
