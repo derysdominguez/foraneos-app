@@ -12,9 +12,12 @@ const ref = React.createRef()
 function BodyReport1() {
   /* Terminado */
 
-  const url = 'https://apimocha.com/foraneos-app/rep1'
+  
   const [ingresosMes, setIngresosMes] = useState()
-  const [totalIngresos, setTotalIngresos] = useState()
+  const [totalIngresos, setTotalIngresos] = useState();
+  const [mesSel, setMesSel] = useState(4);
+
+  const url = 'https://apimocha.com/foraneos-app/rep1';
 
   const [egresosMes, setEgresosMes] = useState()
   const [totalEgresos, setTotalEgresos] = useState()
@@ -57,6 +60,7 @@ function BodyReport1() {
     const regex = new RegExp(
       '^2023-' + selectedMes + '-(0?[1-9]|[1-2][0-9]|3[0-1])$'
     )
+    setMesSel(parseInt(selectedMes));
     const ingMes = ingresos.filter((item) => regex.test(item.fecha))
     const egrMes = egresos.filter((item) => regex.test(item.fecha))
     if (ingMes.length > 0 && egrMes.length > 0) {

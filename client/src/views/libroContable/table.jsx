@@ -6,7 +6,7 @@ import {AiOutlineEdit} from 'react-icons/ai'
 
 function TableGenerator(props) {
   const { data } = props;
-
+  console.log(data);
   const renderTableHeader = () => {
     return (
       <thead>
