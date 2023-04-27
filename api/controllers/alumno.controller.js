@@ -30,7 +30,7 @@ async function createAlumno(req, res) {
     try {
         const alumnoFound = await Alumno.findOne({ where: { codigo: codigo } });
         if (alumnoFound) {
-            res.status(400).json({ message: "El alumno ya existe" });
+            res.status(400).json({ message: "Un alumno con ese código ya existe." });
         }
         const alumno = await Alumno.create({
             codigo,
