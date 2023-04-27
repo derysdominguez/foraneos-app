@@ -8,6 +8,7 @@ const Cuenta = require("./models/Cuenta.js");
 const Mensualidad = require("./models/Mensualidad.js");
 const Deuda = require("./models/Deuda.js");
 const Retiro = require("./models/Retiro.js");
+const {seedDatabase} = require("./seeds/index.js");
 
 const app = require("./app.js");
 require("dotenv").config();
@@ -19,6 +20,7 @@ async function main() {
         await sequelize.authenticate();
         await sequelize.sync({force : false});
         console.log("Conexión exitosa");
+        // seedDatabase();
         app.listen(port);
         console.log("Server is listening on port", port);
     } catch (error) {

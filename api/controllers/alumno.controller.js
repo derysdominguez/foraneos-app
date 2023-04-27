@@ -102,9 +102,39 @@ async function getAlumnoById(req, res) {
     }
     res.status(200).json(alumno)
   } catch (error) {
-    res.status(500).json({ message: error.message })
+    res.status(500).json({ message: error.message });
   }
 }
+
+async function deleteAlumno(req, res) {
+  try {
+    const {id} = req.params;
+    await Alumno.destroy({
+      where : {
+        id
+      }
+    });
+    res.sendStatus(204);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+async function updateAlumno(req, res) {
+  try {
+    const {id} = req.params;
+    const {nombre, codigo, becaid, grado} = req.body;
+    const alumno = await Alumno.findByPk(id);
+    alumno.nombre = nombre;
+    alumno.codigo = codigo;
+    alumno.becaid = becaid;
+    alumno.grado = grado;
+    await alumno.save();
+    res.json(alumno);
+  } catch (error) {
+    res.status(500).json({message : error.message});
+  }
+};
 
 
 
@@ -112,5 +142,7 @@ module.exports = {
   getAlumnos,
   createAlumno,
   setAlumnoInactivo,
-  getAlumnoById
+  getAlumnoById,
+  updateAlumno,
+  deleteAlumno
 }

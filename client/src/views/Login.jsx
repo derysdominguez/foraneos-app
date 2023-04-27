@@ -25,12 +25,13 @@ function Login() {
   return (
     <>
       <Container className='d-flex justify-content-center align-items-center vh-100'>
-        <Row className='h-control bg-light align-items-center text-center px-4 py-4'>
+        <Row className='h-control bg-light align-items-center text-center px-4 py-2'>
           <Col>
+            <img src="./src/assets/styles/img/logo.png" className="logo mb-3"/>
             <Form onSubmit={handleSubmit} method='POST'>
-              <h2>Bienvenido a Foraneos-App</h2>
+              <h2>Bienvenido a SJBS Contable</h2>
 
-              <Form.Group className='mt-5 mb-3' controlId='formBasicEmail'>
+              <Form.Group className='mt-4 mb-3' controlId='formBasicEmail'>
                 <Form.Control
                   onChange={handleChange}
                   name='username'
@@ -54,7 +55,7 @@ function Login() {
               <Button type='submit' variant='primary' className='w-100'>
                 Iniciar Sesion
               </Button>
-              <p className='mt-3 mb-5 fs-6'>
+              <p className='mt-3 mb-3 fs-6'>
                 ¿No tienes cuenta? <b>Consulta con soporte.</b>
               </p>
 

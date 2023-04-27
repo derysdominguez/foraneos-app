@@ -4,6 +4,7 @@ const AsientoDetalle = require("../models/AsientoDetalle.js");
 const Cuenta = require("../models/Cuenta.js");
 const Mensualidad = require("../models/Mensualidad.js");
 const moment = require("moment");
+const {Op} = require("sequelize");
 
 const meses = [
   "enero",
@@ -244,3 +245,31 @@ module.exports.getReporteIngresosEgresosPorMes = async (req, res) => {
       res.status(500).json({ message: error.message })
     }
   };
+
+  module.exports.getReporteGanancias = async (req, res) => {
+    try {
+      cuentasIngresos = await Cuenta.findAll({
+        attributes : [codigo],
+        where : {  
+          clasificacion : "ingreso"
+        }
+      });
+      cuentasGastos = await Cuenta.findAll({
+        where : {
+          attributes : [codigo],
+          clasificacion : {
+            [Op.in] : ["gasto-admin", "gasto-ventas"]
+          }
+        }
+      });
+
+      codigosCuentasIngresos = cuentasIngresos.map(objeto => objeto.codigo);
+      codigosCuentasGastos = cuentasGastos.map(objeto => objeto.codigo);
+
+      
+      
+      
+    } catch (error) {
+      res.status(500).json({ message: error.message })
+    }
+  }
