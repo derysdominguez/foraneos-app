@@ -219,19 +219,19 @@ module.exports.getReporteIngresosEgresosPorMes = async (req, res) => {
       const alumnosBecadosPorGrado = []
       for (let grado = 1; grado <= 13; grado++) {
         const alumnos = await Alumno.findAll({
-          attributes: ['id'],
           where: {
             grado: grado
           }
-        })
+        });
+
         let completa = 0
         let media_beca = 0
         let sin_beca = 0
         alumnos.forEach((alumno) => {
-          const { becaid } = alumno
-          if (becaid === 1) completa++
-          if (becaid === 2) media_beca++
-          if (becaid === 3) sin_beca++
+          const { becaid } = alumno;
+          if (becaid === 1) completa++;
+          if (becaid === 2) media_beca++;
+          if (becaid === 3) sin_beca++;
         })
         alumnosBecadosPorGrado.push({
           grado: grados[grado - 1],
@@ -246,29 +246,67 @@ module.exports.getReporteIngresosEgresosPorMes = async (req, res) => {
     }
   };
 
-  module.exports.getReporteGanancias = async (req, res) => {
+  module.exports.getReporteGananciasPorMes = async (req, res) => {
     try {
+      console.log("Recopilando reporte");
       cuentasIngresos = await Cuenta.findAll({
-        attributes : [codigo],
+        attributes : ["codigo"],
         where : {  
           clasificacion : "ingreso"
         }
       });
       cuentasGastos = await Cuenta.findAll({
+        attributes : ["codigo"],
         where : {
-          attributes : [codigo],
           clasificacion : {
             [Op.in] : ["gasto-admin", "gasto-ventas"]
           }
         }
       });
+      console.log(cuentasIngresos);
 
       codigosCuentasIngresos = cuentasIngresos.map(objeto => objeto.codigo);
       codigosCuentasGastos = cuentasGastos.map(objeto => objeto.codigo);
+      console.log(codigosCuentasGastos);
+      console.log(codigosCuentasIngresos);
 
-      
-      
-      
+      const gananciasNetasPorMes = [];
+      for (let mes = 0; mes <= 11; mes++ ) {
+        const anioActual = moment().year();
+        const inicioMes = moment().year(anioActual).month(0).startOf('month').format("YYYY-MM-DD");
+        const finMes = moment().year(anioActual).month(0).endOf('month').format("YYYY-MM-DD");
+        const asientosDelMes = await Asiento.findAll({
+          attributes : ["codigo"],
+          where : {
+            fecha_asiento : {
+              [Op.between] : [inicioMes, finMes]
+              }
+            }
+          });
+        const idsAsientosMes = asientosDelMes.map(objeto => objeto.codigo);
+        const ingresos = await AsientoDetalle.sum("monto", {
+          where : {
+            asientoid : {[Op.in] : idsAsientosMes},
+            cuentaid : {[Op.in] : codigosCuentasIngresos},
+            lado : "h"
+          }
+        });
+        const gastos = await AsientoDetalle.sum("monto", {
+          where : {
+            asientoid : {[Op.in] : idsAsientosMes},
+            cuentaid : {[Op.in] : codigosCuentasGastos},
+            lado : "d"
+          }
+        });
+        const gananciasMes = ingresos - gastos;
+        gananciasNetasPorMes.push({
+          mes : meses[mes].charAt(0).toUpperCase() + meses[mes].slice(1),
+          ingresos : ingresos ? ingresos : 0,
+          gastos : gastos ? gastos : 0,
+          ganancias : gananciasMes
+        });
+      }
+      res.json(gananciasNetasPorMes);
     } catch (error) {
       res.status(500).json({ message: error.message })
     }

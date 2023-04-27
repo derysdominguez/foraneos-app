@@ -1,4 +1,3 @@
-
 const sequelize = require("./database/database.js");
 const Beca = require("./models/Beca.js");
 const Alumno = require("./models/Alumno.js");
@@ -18,7 +17,7 @@ const port = process.env.DB_PORT;
 async function main() {
     try {
         await sequelize.authenticate();
-        await sequelize.sync({force : false});
+        // await sequelize.sync({force : false});
         console.log("Conexión exitosa");
         // seedDatabase();
         app.listen(port);

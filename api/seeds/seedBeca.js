@@ -7,7 +7,7 @@ module.exports.seedBeca = async () => {
             pago : 1325
         });
         await Beca.create({
-            tipo : "Meida beca",
+            tipo : "Media beca",
             pago : 662.5
         });
         await Beca.create({
