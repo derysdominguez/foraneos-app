@@ -1,6 +1,6 @@
 
 const Alumno = require('../models/Alumno.js');
-
+const Mensualidad = require('../models/Mensualidad.js');
 
 const alumnos = [
     {
@@ -185,12 +185,32 @@ const alumnos = [
         }
 ]
 
+const ordenDeMensualiadades = [
+    "septiembre",
+    "octubre",
+    "noviembre",
+    "diciembre",
+    "enero",
+    "febrero",
+    "marzo",
+    "abril",
+    "mayo",
+    "junio",
+  ];
 
 module.exports.seedAlumno = async () => {
     try {
         alumnos.forEach(async alumno => {
-            await Alumno.create(alumno)
+            const alumnoCreado = await Alumno.create(alumno)
+            ordenDeMensualiadades.forEach(async (mes) => {
+                await Mensualidad.create({
+                    alumnoid : alumnoCreado.id,
+                    fecha_pago : null,
+                    mes
+                });
+            });
         });
+        
     } catch (error) {
         console.log("Error al crear alumno", error.message);
     }

@@ -30,6 +30,8 @@ const ordenDeMensualiadades = [
   "junio",
 ];
 
+
+
 const grados = ["Kinder", "Preparatoria", "Primero", "Segundo", "Tercero", "Cuarto", "Quinto", "Sexto", "Septimo", "Octavo", "Noveno", "Decimo", "Undecimo"];
 
 const diaDePago = 15;
@@ -84,6 +86,10 @@ module.exports.updateTodasMensualidades = async (req, res) => {
     const alumno = await Alumno.findByPk(alumnoid);
     if (alumno) {
       const mensualidades = req.body;
+      mensualidades.sort(a,b => {
+        return ordenDeMensualiadades.indexOf(a.mes) < ordenDeMensualiadades.indexOf(b.mes);
+      });
+      let tieneMensualidadPreviaNoPagada = false;
       mensualidades.forEach(async mensualidad => {
         const {mes, fecha_pago} = mensualidad;
         const updatedMensualidad = await Mensualidad.findOne({
@@ -92,12 +98,31 @@ module.exports.updateTodasMensualidades = async (req, res) => {
             alumnoid : alumnoid
           }
         });
-        updatedMensualidad.fecha_pago = fecha_pago;
-        if (updatedMensualidad.fecha_pago && updatedMensualidad.fecha_pago > fechasDondePagan[ordenDeMensualiadades.indexOf(updatedMensualidad.mes)]) {
-          alumno.pago_perfecto = false;
-          await alumno.save();
+
+        if (fecha_pago && tieneMensualidadPreviaNoPagada) {
+          throw new Error("No puede ingresar un pago de una mensualidad futura cuando hay cuotas anteriores no canceladas.");
         }
-        await updatedMensualidad.save();
+
+        if (updatedMensualidad) {
+          updatedMensualidad.fecha_pago = fecha_pago;
+          if (!fecha_pago) {
+            tieneMensualidadPreviaNoPagada = true;
+          }
+          if (updatedMensualidad.fecha_pago && updatedMensualidad.fecha_pago > fechasDondePagan[ordenDeMensualiadades.indexOf(updatedMensualidad.mes)]) {
+            alumno.pago_perfecto = false;
+            await alumno.save();
+          }
+          await updatedMensualidad.save();
+        } else {
+          const mensualidadCreada = await Mensualidad.create({
+            alumnoid,
+            mes,
+            fecha_pago
+          });
+          
+        }
+
+        
       });
       res.sendStatus(204);
     } else {

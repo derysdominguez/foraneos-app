@@ -34,6 +34,9 @@ const ordenDeMensualiadades = [
 async function getAlumnos(req, res) {
   try {
     const alumnos = await Alumno.findAll({
+        where : {
+          activo : true
+        },
         include: [
             {
                 model: Beca,
@@ -135,8 +138,6 @@ async function updateAlumno(req, res) {
     res.status(500).json({message : error.message});
   }
 };
-
-
 
 module.exports = {
   getAlumnos,
