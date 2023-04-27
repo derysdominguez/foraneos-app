@@ -3,32 +3,14 @@ import GradoSelect from '../../components/GradoSelect'
 import { TablaAlumnos } from './TablaAlumnos'
 import { Button, Form, Modal } from 'react-bootstrap'
 import { BiBookAdd } from 'react-icons/bi'
-const URL = 'http://localhost:4000/alumnos'
+const URL = 'http://localhost:4001/alumnos'
 import Swal from 'sweetalert2'
 
 export function Body() {
   const [data, setData] = useState([])
   const [filteredData, setFilteredData] = useState([data])
-  const [lastCode, setLastCode] = useState(null)
-
   const [alumnosModal, setAlumnosModal] = useState()
 
-  useEffect(() => {
-    fetch(URL)
-      .then((res) => res.json())
-      .then((res) => {
-        const alumnos = res.map((item) => {
-          return {
-            'nombre': item.nombre,
-            'codigo': item.codigo,
-            'grado': grados[item.grado],
-            'estado': item.activo ? 'Activo' : 'Inactivo'
-          }
-        })
-        setData(alumnos)
-        setFilteredData(alumnos)
-      })
-  }, [lastCode])
   const handleShowModal = () => setAlumnosModal(true)
 
   const handleCloseAlumnosModal = () => {
@@ -84,13 +66,29 @@ export function Body() {
     12: 'Décimo',
     13: 'Undécimo'
   }
-  
+  useEffect(() => {
+    fetch(URL)
+      .then((res) => res.json())
+      .then((res) => {
+        const alumnos = res.map((item) => {
+          return {
+            'nombre': item.nombre,
+            'codigo': item.codigo,
+            'grado': grados[item.grado],
+            'estado': item.activo ? 'Activo' : 'Inactivo'
+          }
+        })
+        setData(alumnos)
+        setFilteredData(alumnos)
+      })
+  }, [data])
 
   const handleGradoChange = (selectedGrado) => {
     const filter = data.filter((item) => {
       if (selectedGrado === 'todos') {
         return item
       } else {
+        console.log(item.grado.toLowerCase() === selectedGrado)
         return item.grado.toLowerCase() === selectedGrado
       }
     })
@@ -115,7 +113,6 @@ export function Body() {
               },
               body: JSON.stringify(modelAlumnos),
           });
-          setLastCode(modelAlumnos.codigo)
           const dataCenter = await response.json();
           console.log(dataCenter)
           console.log(modelAlumnos)
