@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import TableBtn from '../tablas'
 import GradoSelect from '../../components/GradoSelect'
 
+
 const URL = 'http://localhost:4000/alumnos'
 const urlMensualidad = 'http://localhost:4000/mensualidades/'
 const Body = () => {
@@ -12,27 +13,30 @@ const Body = () => {
   const [meses, setMeses] = useState([])
   const [datosGrado, setDatosGrado] = useState()
   const [alumnos, setAlumnos] = useState([])
+  const [dataFiltered, setDataFiltered] = useState([])
 
   useEffect(() => {
     fetch(URL)
       .then((res) => res.json())
       .then((res) => {
-        const alumnos = res.map((item) => {
+        const alumnosPagos = res.map((item) => {
           fetch(urlMensualidad + item.id)
             .then((res) => res.json())
             .then((res) => {
-              const meses = res.map((item2) => {
-                if(item.id === item2.alumnoid){
-                    return item2
+              // console.log(res);
+              const dataa = res.map((item2) => {
+                if (item.id === item2.alumnoid) {
+                  item[item2.mes] = item2.fecha_pago ?? ''
                 }
-              });
-                return meses;
-            });
-        });
-      });
-  }, []);
+              })
+              setAlumnos((prev) => [...prev, item])
+              
+            
+            })
+        })
+      })
+  }, [])
 
-console.log(alumnos)
   const api = async () => {
     try {
       const response = await fetch(url)
@@ -45,7 +49,7 @@ console.log(alumnos)
       })
 
       setData(lbJSON)
-      console.log(lbJSON)
+      //   console.log(lbJSON)
     } catch (error) {
       console.error(error)
     }
@@ -64,6 +68,21 @@ console.log(alumnos)
       setDatosGrado([{ Estado: 'Sin datos' }])
     }
   }
+
+  useEffect(() => {
+    const filtered = alumnos.filter((item) => {
+        return (
+          delete item.id,
+          delete item.beca,
+          delete item.becaid,
+          delete item.pago_perfecto,
+          delete item.activo
+        )
+      })
+    
+      setDataFiltered(filtered)
+      console.log(dataFiltered)
+  },[alumnos])
 
   return (
     <div className='bodyText bg-white w-100 p-4 rounded d-flex align-items-start d-flex gap-2 flex-wrap justify-content-evenly'>
